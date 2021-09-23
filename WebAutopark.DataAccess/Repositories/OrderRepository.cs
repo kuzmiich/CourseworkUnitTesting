@@ -53,7 +53,7 @@ namespace WebAutopark.DataAccess.Repositories
             );
         }
 
-        public async Task<Order> Get(int id)
+        public async Task<Order> GetById(int id)
         {
             var orderDetails = new List<OrderDetail>();
 

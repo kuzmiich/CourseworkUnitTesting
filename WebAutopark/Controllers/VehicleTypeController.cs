@@ -30,7 +30,7 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> VehicleTypeInfo(int id)
         {
-            var getModel = await _vehicleTypeRepository.Get(id);
+            var getModel = await _vehicleTypeRepository.GetById(id);
 
             if (getModel is null)
                 return NotFound();
@@ -61,7 +61,7 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> VehicleTypeUpdate(int id)
         {
-            var updateModel = await _vehicleTypeRepository.Get(id);
+            var updateModel = await _vehicleTypeRepository.GetById(id);
 
             if (updateModel is null)
                 return NotFound();
@@ -86,7 +86,7 @@ namespace WebAutopark.Controllers
         [ActionName("VehicleTypeDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
-            var deleteModel = await _vehicleTypeRepository.Get(id);
+            var deleteModel = await _vehicleTypeRepository.GetById(id);
 
             if (deleteModel is null)
                 return NotFound();

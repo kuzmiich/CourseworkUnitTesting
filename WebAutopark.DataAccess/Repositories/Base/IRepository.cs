@@ -5,7 +5,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
 {
     public interface IRepository<T>
     {
-        Task<T> Get(int id);
+        Task<T> GetById(int id);
         Task<IEnumerable<T>> GetAll();
 
         Task Create(T element);

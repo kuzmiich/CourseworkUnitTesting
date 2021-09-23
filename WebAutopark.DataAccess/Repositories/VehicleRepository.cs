@@ -69,7 +69,7 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task<IEnumerable<Vehicle>> GetAll() => await GetAll(VehicleSortCriteria.Id);
 
-        public async Task<Vehicle> Get(int id)
+        public async Task<Vehicle> GetById(int id)
         {
             var collection = await DbConnection.QueryAsync<Vehicle, VehicleType, Vehicle>(QueryGetById,
                 (vehicle, vehicleType) =>

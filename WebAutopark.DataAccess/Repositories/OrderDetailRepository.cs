@@ -40,7 +40,7 @@ namespace WebAutopark.DataAccess.Repositories
                 splitOn: "OrderDetailId"
             );
 
-        public async Task<OrderDetail> Get(int id)
+        public async Task<OrderDetail> GetById(int id)
         {
             var collection = await DbConnection.QueryAsync<OrderDetail, Detail, OrderDetail>
             (

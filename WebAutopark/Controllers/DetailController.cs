@@ -34,7 +34,7 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailInfo(int id)
         {
-            var getModel = await _detailRepository.Get(id);
+            var getModel = await _detailRepository.GetById(id);
 
             if (getModel is null)
                 return NotFound();
@@ -64,7 +64,7 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailUpdate(int id)
         {
-            var updateModel = await _detailRepository.Get(id);
+            var updateModel = await _detailRepository.GetById(id);
 
             if (updateModel is null)
                 return NotFound();
@@ -89,7 +89,7 @@ namespace WebAutopark.Controllers
         [ActionName("DetailDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
-            var deleteModel = await _detailRepository.Get(id);
+            var deleteModel = await _detailRepository.GetById(id);
 
             if (deleteModel is null)
                 return NotFound();

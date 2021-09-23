@@ -24,7 +24,7 @@ namespace WebAutopark.DataAccess.Repositories
         {
         }
 
-        public async Task<Detail> Get(int id) => await DbConnection.QueryFirstAsync<Detail>(QueryGetById, new { id });
+        public async Task<Detail> GetById(int id) => await DbConnection.QueryFirstAsync<Detail>(QueryGetById, new { id });
 
         public async Task<IEnumerable<Detail>> GetAll() => await DbConnection.QueryAsync<Detail>(QueryGetAll);
 

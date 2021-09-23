@@ -31,7 +31,7 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> OrderInfo(int id)
         {
-            var order = await _orderRepository.Get(id);
+            var order = await _orderRepository.GetById(id);
 
             return View(_mapper.Map<OrderViewModel>(order));
         }
