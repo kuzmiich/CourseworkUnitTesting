@@ -4,12 +4,11 @@
     {
         Red = 1,
         White,
-        Blue, 
-        Yellow, 
+        Blue,
+        Yellow,
         Green,
         Gold,
         Black,
         Silver,
-        
     }
 }

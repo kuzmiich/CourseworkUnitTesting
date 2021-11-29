@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebAutopark.DataAccess.Repositories.Base
 {
-    public interface IRepository<T>
+    public interface IRepository<T> : IDisposable, IAsyncDisposable
     {
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
+        IQueryable<T> GetAll();
+        Task<T> GetById(Guid id);
 
-        Task Create(T element);
-        Task Update(T element);
-        
-        Task Delete(int id);
+        Task<T> Create(T element);
+        T Update(T element);
+
+        Task Save();
+        Task Delete(Guid id);
     }
 }

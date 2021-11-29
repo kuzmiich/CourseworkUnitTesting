@@ -1,4 +1,4 @@
-﻿import { setCookie, deleteCookie, getCookie } from "./cookie_provider.js";
+﻿import {setCookie, deleteCookie, getCookie} from "./cookie_provider.js";
 
 function setCriteriaCookie(time) {
     const criteriaIdName = "criteria";
@@ -6,15 +6,17 @@ function setCriteriaCookie(time) {
 
     setCookie(criteriaIdName, criteriaValue, time);
 }
+
 function setAscendingCookie(time) {
     const isAscendingIdName = "isAscending";
     const isAscendingValue = document.getElementById(isAscendingIdName).checked;
 
     setCookie(isAscendingIdName, isAscendingValue, time);
 }
+
 function upload() {
     document.getElementById("criteria").selectedIndex = getCookie("criteria") != null ? getCookie("criteria") : 0;
-    
+
     document.getElementById("isAscending").checked = getCookie("isAscending") != null ? getCookie("isAscending") === "true" : true;
 }
 
@@ -28,6 +30,7 @@ async function main() {
     document.getElementById("isAscending").addEventListener("click", () => {
         setAscendingCookie(time);
     });
-    
+
 }
+
 main();

@@ -1,20 +1,28 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.Tests.Fixtures.Base;
 
 namespace WebAutopark.Tests.Fixtures
 {
-    public class DetailRepositoryFixture : RepositoryFixture<DetailRepository>
+    internal class DetailRepositoryFixture : RepositoryFixture<DetailRepository>
     {
-        public DetailRepositoryFixture(DbConnection dbConnection) : base(dbConnection)
-        {
-        }
+        public Guid Id { get; set; }
+        protected override DetailRepository CreateRepository() => new (Connection);
 
-        protected override DetailRepository CreateRepository() => new (DbConnection);
-
-        protected override void InitDatabase()
+        protected override async Task InitDatabase()
         {
-            throw new System.NotImplementedException();
+            var details = new List<Detail>
+            {
+                new () { Name = "Name" },
+                new () { Name = "Name2" } 
+            };
+            await Connection.Details.AddRangeAsync(details);
+            await Connection.SaveChangesAsync();
+            Id = Connection.Details.First().Id;
         }
     }
 }

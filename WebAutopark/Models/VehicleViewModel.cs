@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using WebAutopark.Core.Enums;
 
-namespace WebAutopark.BusinessLogic.Models
+namespace WebAutopark.Models
 {
     public class VehicleViewModel
     {
@@ -17,25 +17,32 @@ namespace WebAutopark.BusinessLogic.Models
         public int VehicleTypeId { get; set; }
 
         public VehicleTypeViewModel VehicleType { get; set; }
-        [MaxLength(30)] 
+        [Range(5, 30)] 
         public string ModelName { get; set; }
-        [MaxLength(20)] 
+        [Range(5, 30)] 
         public string RegistrationNumber { get; set; }
+        [Range(1980, int.MaxValue)] 
         public int ManufactureYear { get; set; }
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue)] 
         public int Weight { get; set; }
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue)] 
         public int Mileage { get; set; }
-        [Range(1, 8)]
+        [Range(1, 8)] 
         public ColorType Color { get; set; }
-        [Range(0, double.MaxValue)]
+        [Range(0, double.MaxValue)] 
         public double EngineConsumption { get; set; }
-        [Range(0, double.MaxValue)]
+        [Range(0, double.MaxValue)] 
         public double TankCapacity { get; set; }
-        
-        public virtual double GetCalcTaxPerMonth => (VehicleType is not null) ? Math.Round(Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2) : 0d;
 
-        public virtual double KmPerFullTank => (TankCapacity != 0 || EngineConsumption != 0) ? Math.Round(TankCapacity / EngineConsumption, 2) : 0d;
+        public virtual double GetCalcTaxPerMonth => (VehicleType is not null)
+            ? Math.Round(Weight * WeightCoefficient +
+                         VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2)
+            : 0d;
+
+        public virtual double KmPerFullTank => (TankCapacity != 0 || EngineConsumption != 0)
+            ? Math.Round(TankCapacity /
+                         EngineConsumption, 2)
+            : 0d;
 
         #endregion
     }

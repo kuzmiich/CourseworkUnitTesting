@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
+using WebAutopark.Core.Entities.Base;
 
 namespace WebAutopark.Core.Entities
 {
-    public class Order
+    public class Order : Entity
     {
-        public int OrderId { get; set; }
+        public IEnumerable<Product> Products { get; set; }
 
-        public int VehicleId { get; set; }
+        public string Description { get; set; }
 
-        public Vehicle Vehicle { get; set; }
-
-        public IEnumerable<OrderDetail> OrderDetails { get; set; }
+        public decimal Price { get; set; }
     }
 }

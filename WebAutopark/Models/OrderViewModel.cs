@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebAutopark.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAutopark.BusinessLogic.Models
+namespace WebAutopark.Models
 {
     public class OrderViewModel
     {
         public int OrderId { get; set; }
 
-        [Required] public int VehicleId { get; set; }
+        [Required] public int DetailId { get; set; }
 
-        public VehicleViewModel Vehicle { get; set; }
+        public DetailViewModel Detail { get; set; }
 
-        public IEnumerable<OrderDetailViewModel> OrderDetails { get; set; }
+        [Range(1, int.MaxValue)] public int DetailAmount { get; set; }
     }
 }

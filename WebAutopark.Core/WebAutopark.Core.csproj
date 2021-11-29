@@ -1,17 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="DevIncubator.WebAutopark\**" />
-    <EmbeddedResource Remove="DevIncubator.WebAutopark\**" />
-    <None Remove="DevIncubator.WebAutopark\**" />
-    <Compile Remove="Extension\**" />
-    <EmbeddedResource Remove="Extension\**" />
-    <None Remove="Extension\**" />
-  </ItemGroup>
-   
+    <ItemGroup>
+        <Compile Remove="DevIncubator.WebAutopark\**" />
+        <EmbeddedResource Remove="DevIncubator.WebAutopark\**" />
+        <None Remove="DevIncubator.WebAutopark\**" />
+        <Compile Remove="Extension\**" />
+        <EmbeddedResource Remove="Extension\**" />
+        <None Remove="Extension\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.0" />
+    </ItemGroup>
+
 </Project>
