@@ -1,0 +1,20 @@
+﻿@model WebAutopark.Models.DetailViewModel
+
+@{
+    ViewData["Title"] = "DetailGetById";
+}
+<div class="card col-md-7 m-auto">
+    <div class="card-header">
+        <h2 class="text-center">Detail</h2>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" readonly/>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+</div>

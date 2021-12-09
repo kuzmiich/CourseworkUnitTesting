@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebAutopark.Models.VehicleTypeViewModel>
+
+@{
+    ViewData["Title"] = "VehicleTypeList";
+}
+<h1 class="text-center">VehicleType page</h1>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaxCoefficient)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxCoefficient)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("View", "VehicleTypeInfo", new {id = item.VehicleTypeId}) |
+                @Html.ActionLink("Edit", "VehicleTypeUpdate", new {id = item.VehicleTypeId}) |
+                @Html.ActionLink("Delete", "VehicleTypeDelete", new {id = item.VehicleTypeId})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="text-center mt-3">
+    <a class="btn btn-primary" asp-action="VehicleTypeCreate">Create new</a>
+</div>
