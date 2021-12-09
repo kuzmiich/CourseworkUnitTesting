@@ -15,13 +15,11 @@ namespace WebAutopark.DataAccess.Extensions
         {
             services.AddScoped<IRepository<Detail>, DetailRepository>();
 
-            /*services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
 
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
 
-            services.AddScoped<IRepository<OrderDetail>, OrderDetailRepository>();
-
-            services.AddScoped<IRepository<OrderVehicle>, OrderVehicleRepository>();*/
+            services.AddScoped<IRepository<Order>, OrderRepository>();
             
             return services;
         }

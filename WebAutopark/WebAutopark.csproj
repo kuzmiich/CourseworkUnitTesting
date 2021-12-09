@@ -19,7 +19,6 @@
       <ProjectReference Include="..\WebAutopark.BusinessLayer\WebAutopark.BusinessLayer.csproj" />
       <ProjectReference Include="..\WebAutopark.Core\WebAutopark.Core.csproj" />
       <ProjectReference Include="..\WebAutopark.DataAccess\WebAutopark.DataAccess.csproj" />
-      <ProjectReference Include="..\WebAutopark.Identity\WebAutopark.Identity.csproj" />
     </ItemGroup>
 
     <ItemGroup>
