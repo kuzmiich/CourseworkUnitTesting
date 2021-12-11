@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Entities;
 using WebAutopark.Core.Exceptions;
 using WebAutopark.Tests.Fixtures;
@@ -21,14 +22,14 @@ namespace WebAutopark.Tests.Repositories
         public async Task GetAll_OK()
         {
             // Arrange
-            var detailsFromContext = _fixture.Connection.Orders;
+            var ordersFromContext = _fixture.Connection.Orders;
             
             // Act
-            var result = _fixture.Repository.GetAll();
+            var result = await _fixture.Repository.GetAll().ToListAsync();
             
             // Assert
             Assert.NotEmpty(result);
-            Assert.Equal(detailsFromContext.Count(), result.Count());
+            Assert.Equal(ordersFromContext.Count(), result.Count());
         }
 
         [Fact]
