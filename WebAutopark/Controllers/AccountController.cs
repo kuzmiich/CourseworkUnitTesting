@@ -22,7 +22,7 @@ namespace WebAutopark.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("/register")]
         public IActionResult Register()
         {
             return View();
@@ -54,7 +54,7 @@ namespace WebAutopark.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("/login")]
         public IActionResult Login()
         {
             return View();
@@ -67,7 +67,7 @@ namespace WebAutopark.Controllers
             if (ModelState.IsValid)
             {
                 var result = 
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -78,7 +78,8 @@ namespace WebAutopark.Controllers
 
             return View(model);
         }
-
+        
+        
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync(); // delete authentication cookies

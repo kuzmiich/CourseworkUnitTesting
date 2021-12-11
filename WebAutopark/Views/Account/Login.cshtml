@@ -4,24 +4,31 @@
     ViewBag.Title = "Sign in";
 }
 
-<h2>Sign in</h2>
-<form method="post" asp-controller="Account" asp-action="Login" asp-anti-forgery="true">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+<div class="card col-md-7 m-auto">
+    <div class="card-header">
+        <h2 class="mb-2 text-center">Sign in</h2>
     </div>
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
+    <div class="card-body">
+        <form method="post" asp-controller="Account" asp-action="Login" asp-anti-forgery="true">
+            <div asp-validation-summary="ModelOnly" class="validation validation-fix"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label ml-md-1"></label>
+                <input asp-for="Email" class="form-control" placeholder="user@gmail.com"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label ml-md-1"></label>
+                <input asp-for="Password" class="form-control" placeholder="********"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+             <div class="form-group d-flex justify-content-center">
+                 <label>If not Register → </label>
+                 <a asp-action="Register" asp-controller="Account" class="btn-link">Register</a>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Sign in" class="btn btn-primary"/>
+            </div>
+        </form>
     </div>
-    <div>
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <input type="submit" value="Sign in" />
-    </div>
-</form>
+</div>
