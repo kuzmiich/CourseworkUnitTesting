@@ -1,63 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using WebAutopark.BusinessLayer.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using WebAutopark.BusinessLayer.Interfaces.Base;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.BusinessLayer.Services.Base
 {
-    public abstract class Service<TEntity, TRepository> : IService<TEntity>
+    public abstract class Service<TModel, TEntity, TRepository> : IService<TModel>
+        where TModel : class
         where TEntity : class
         where TRepository : IRepository<TEntity>
     {
-        protected readonly TRepository _repository;
+        protected readonly IMapper Mapper;
+        protected readonly TRepository Repository;
 
-        protected Service(TRepository repository)
+        protected Service(TRepository repository, IMapper mapper)
         {
-            _repository = repository;
+            Repository = repository;
+            Mapper = mapper;
         }
         
-        public virtual Task<List<TEntity>> GetAll()
+        public virtual async Task<List<TModel>> GetAll()
         {
-            return _repository.GetAll() as Task<List<TEntity>>;
+            var entities = Repository.GetAll();
+
+            return await entities.ProjectTo<TModel>(Mapper.ConfigurationProvider)
+                                 .ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetById(Guid id)
+        public async Task<TModel> GetById(Guid id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await Repository.GetById(id);
 
-            return entity;
+            return Mapper.Map<TModel>(entity);
         }
-        public virtual async Task<TEntity> Create(TEntity entity)
+        public virtual async Task<TModel> Create(TModel model)
         {
-            var createdEntity = await _repository.Create(entity);
-            await _repository.Save();
+            var entity = Mapper.Map<TEntity>(model);
 
-            return createdEntity;
-        }
+            var createdEntity = await Repository.Create(entity);
+            await Repository.Save();
 
-        public virtual async Task<TEntity> Update(TEntity model)
-        {
-            var updatedEntity = _repository.Update(model);
-            await _repository.Save();
-
-            return updatedEntity;
-        }
-        public virtual async Task Delete(Guid id)
-        {
-            await _repository.Delete(id);
-            await _repository.Save();
-        }
-        public void Dispose()
-        {
-            _repository?.Dispose();
+            return Mapper.Map<TModel>(createdEntity);
         }
 
-        public ValueTask DisposeAsync()
+        public virtual async Task<TModel> Update(TModel model)
         {
-            return _repository.DisposeAsync();
-        }
+            var mappedEntity = Mapper.Map<TEntity>(model);
+            var updatedEntity = Repository.Update(mappedEntity);
 
+            await Repository.Save();
+
+            return Mapper.Map<TModel>(updatedEntity);
+        }
+        public async Task Delete(Guid id)
+        {
+            await Repository.Delete(id);
+            await Repository.Save();
+        }
+        public void Dispose() => Repository?.Dispose();
+
+        public ValueTask DisposeAsync() => Repository.DisposeAsync();
     }
 }

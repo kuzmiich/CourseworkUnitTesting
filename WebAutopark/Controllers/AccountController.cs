@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebAutopark.Core.Entities.Identity;
 using WebAutopark.Models.Identity;
 
@@ -8,13 +9,17 @@ namespace WebAutopark.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ILogger<AccountController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -28,7 +33,7 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { Email = model.Email };
+                var user = new User { Email = model.Email, UserName = model.Email };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

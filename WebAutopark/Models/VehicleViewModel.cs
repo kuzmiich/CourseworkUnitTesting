@@ -17,9 +17,9 @@ namespace WebAutopark.Models
         public int VehicleTypeId { get; set; }
 
         public VehicleTypeViewModel VehicleType { get; set; }
-        [Range(5, 30)] 
+        [StringLength(30, MinimumLength = 5)] 
         public string ModelName { get; set; }
-        [Range(5, 30)] 
+        [StringLength(30, MinimumLength = 5)] 
         public string RegistrationNumber { get; set; }
         [Range(1980, int.MaxValue)] 
         public int ManufactureYear { get; set; }

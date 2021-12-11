@@ -6,6 +6,7 @@ namespace WebAutopark.Models
     {
         public int DetailId { get; set; }
 
-        [Range(5, 30)] public string Name { get; set; }
+        [StringLength(30, MinimumLength = 4)] 
+        public string Name { get; set; }
     }
 }

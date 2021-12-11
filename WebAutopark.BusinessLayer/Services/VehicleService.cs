@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using WebAutopark.BusinessLayer.Interfaces;
+using WebAutopark.BusinessLayer.Models;
 using WebAutopark.BusinessLayer.Services.Base;
 using WebAutopark.Core.Entities;
 using WebAutopark.Core.Enums;
 using WebAutopark.DataAccess.Repositories;
+using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.BusinessLayer.Services
 {
-    public class VehicleService : Service<Vehicle, VehicleRepository>
+    public class VehicleService : Service<VehicleModel, Vehicle, IRepository<Vehicle>>, IVehicleService
     {
-        public VehicleService(VehicleRepository repository) : base(repository)
+        public VehicleService(IRepository<Vehicle> repository, IMapper mapper) : base(repository, mapper)
         {
         }
-        private static IOrderedEnumerable<Vehicle> GetOrderedVehicleBySortString(IEnumerable<Vehicle> vehicles, VehicleSortCriteria sortCriteria) 
+        private static IEnumerable<Vehicle> GetOrderedVehicleBySortString(IEnumerable<Vehicle> vehicles, VehicleSortCriteria sortCriteria) 
             => sortCriteria switch
         {
             VehicleSortCriteria.Name => vehicles.OrderBy(v => v.ModelName),
@@ -23,22 +27,22 @@ namespace WebAutopark.BusinessLayer.Services
             _ => vehicles.OrderBy(v => v.Id),
         };
 
-        public async Task<IEnumerable<Vehicle>> GetAll(VehicleSortCriteria sortCriteria, bool isAscending = true)
+        public async Task<List<VehicleModel>> GetAll(VehicleSortCriteria sortCriteria, bool isAscending = true)
         {
-            var orderedVehicles = Enumerable.Empty<Vehicle>();
-            var vehicles = await _repository.GetAll().ToListAsync();
+            var orderedVehicles = new List<VehicleModel>();
+            var vehicles = await Repository.GetAll().ToListAsync();
             if (isAscending)
             {
-                orderedVehicles = GetOrderedVehicleBySortString(vehicles, sortCriteria);
+                orderedVehicles = GetOrderedVehicleBySortString(vehicles, sortCriteria) as List<VehicleModel>;
             }
             else
             {
-                orderedVehicles = vehicles.OrderByDescending(v => v);
+                orderedVehicles = vehicles.OrderByDescending(v => v) as List<VehicleModel>;
             }
             return orderedVehicles;
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAll() => await GetAll(VehicleSortCriteria.Id);
+        public override async Task<List<VehicleModel>> GetAll() => await GetAll(VehicleSortCriteria.Id);
 
     }
 }

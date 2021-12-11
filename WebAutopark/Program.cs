@@ -11,11 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json", false, true);*/
 
-
-// added my repositories and services      
-builder.Services.AddCustomSolutionConfigs(builder.Configuration);
-
 builder.Services.AddControllersWithViews();
+
+// added my repositories, services, context, automapper and identity configuration
+builder.Services.AddCustomSolutionConfigs(builder.Configuration);
 
 // Configure application and environment 
 using var app = builder.Build();

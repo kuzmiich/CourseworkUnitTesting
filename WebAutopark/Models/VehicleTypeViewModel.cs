@@ -6,8 +6,10 @@ namespace WebAutopark.Models
     {
         public int VehicleTypeId { get; set; }
 
-        [Range(5, 30)] public string TypeName { get; set; }
+        [StringLength(30, MinimumLength = 5)] 
+        public string TypeName { get; set; }
 
-        [Range(1d, double.MaxValue)] public double TaxCoefficient { get; set; }
+        [Range(1d, double.MaxValue)] 
+        public double TaxCoefficient { get; set; }
     }
 }

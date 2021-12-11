@@ -6,10 +6,7 @@ namespace WebAutopark.Models
     {
         public int OrderId { get; set; }
 
-        [Required] public int DetailId { get; set; }
-
-        public DetailViewModel Detail { get; set; }
-
-        [Range(1, int.MaxValue)] public int DetailAmount { get; set; }
+        [Range(1, int.MaxValue)] 
+        public int Amount { get; set; }
     }
 }

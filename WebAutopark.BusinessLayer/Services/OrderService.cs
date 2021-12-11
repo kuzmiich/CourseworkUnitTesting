@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using WebAutopark.BusinessLayer.Interfaces;
 using WebAutopark.BusinessLayer.Models;
 using WebAutopark.BusinessLayer.Services.Base;
@@ -8,9 +8,9 @@ using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.BusinessLayer.Services
 {
-    public class DetailService : Service<DetailModel, Detail, IRepository<Detail>>, IDetailService
+    public class OrderService : Service<OrderModel, Order, IRepository<Order>>, IOrderService
     {
-        public DetailService(IRepository<Detail> repository, IMapper mapper) 
+        public OrderService(IRepository<Order> repository, IMapper mapper) 
             : base(repository, mapper)
         {
         }
