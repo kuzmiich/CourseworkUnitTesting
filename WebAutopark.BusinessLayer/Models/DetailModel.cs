@@ -1,9 +1,15 @@
-﻿namespace WebAutopark.BusinessLayer.Models
+﻿using System;
+
+namespace WebAutopark.BusinessLayer.Models
 {
     public class DetailModel
     {
+        public Guid Id { get; set; }
+        
         public string Name { get; set; }
-
-        public string Type => "Detail";
+        
+        public decimal Price { get; set; }
+        
+        public uint ProductAmount { get; set; }
     }
 }

@@ -32,12 +32,12 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailInfo(Guid id)
         {
-            var getModel = await _detailService.GetById(id);
+            var model = await _detailService.GetById(id);
 
-            if (getModel is null)
+            if (model is null)
                 return NotFound();
 
-            return View(_mapper.Map<DetailViewModel>(getModel));
+            return View(_mapper.Map<DetailViewModel>(model));
         }
 
         [HttpGet]

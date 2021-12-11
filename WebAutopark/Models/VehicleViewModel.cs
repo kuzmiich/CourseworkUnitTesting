@@ -12,7 +12,7 @@ namespace WebAutopark.Models
 
         #region Vehicle Property
 
-        public int VehicleId { get; set; }
+        public Guid Id { get; set; }
         [Required] 
         public int VehicleTypeId { get; set; }
 
@@ -30,18 +30,11 @@ namespace WebAutopark.Models
         [Range(1, 8)] 
         public ColorType Color { get; set; }
         [Range(0, double.MaxValue)] 
-        public double EngineConsumption { get; set; }
-        [Range(0, double.MaxValue)] 
-        public double TankCapacity { get; set; }
+        
 
         public virtual double GetCalcTaxPerMonth => (VehicleType is not null)
             ? Math.Round(Weight * WeightCoefficient +
                          VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2)
-            : 0d;
-
-        public virtual double KmPerFullTank => (TankCapacity != 0 || EngineConsumption != 0)
-            ? Math.Round(TankCapacity /
-                         EngineConsumption, 2)
             : 0d;
 
         #endregion

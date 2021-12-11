@@ -47,12 +47,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Color)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EngineConsumption)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TankCapacity)
-        </th>
         <th></th>
         <th></th>
     </tr>
@@ -62,7 +56,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VehicleId)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ModelName)
@@ -85,19 +79,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Color)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EngineConsumption)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TankCapacity)
-            </td>
             <td class="text-center" style="min-width: 160px">
-                @Html.ActionLink("View", "VehicleInfo", new {id = item.VehicleId}) |
-                @Html.ActionLink("Edit", "VehicleUpdate", new {id = item.VehicleId}) |
-                @Html.ActionLink("Delete", "VehicleDelete", new {id = item.VehicleId})
-                @using (Html.BeginForm("Create", "Order", new {id = item.VehicleId}, FormMethod.Post))
+                @Html.ActionLink("View", "VehicleInfo", new {id = item.Id}) |
+                @Html.ActionLink("Edit", "VehicleUpdate", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "VehicleDelete", new {id = item.Id})
+                @using (Html.BeginForm("Create", "Order", new {id = item.Id}, FormMethod.Post))
                 {
-                    @Html.TextBoxFor(v => item.VehicleId, new {@readonly = "readonly", @hidden = "hidden"})
+                    @Html.TextBoxFor(v => item.Id, new {@readonly = "readonly", @hidden = "hidden"})
                     <button type="submit" class="btn btn-link p-0">Create order</button>
                 }
             </td>

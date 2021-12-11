@@ -27,7 +27,7 @@
                     @if (User.Identity!.IsAuthenticated)
                     {
                         <li>
-                            <span class="navbar-text text-dark">Hello, @User.Identity.Name</span>
+                            <span class="navbar-text text-dark">@User.Identity.Name</span>
                         </li>
                         <li>
                             <a class="nav-link text-dark" asp-action="logout" asp-controller="account">Logout</a>

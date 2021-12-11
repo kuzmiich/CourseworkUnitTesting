@@ -12,7 +12,7 @@ namespace WebAutopark.BusinessLayer.Models
 
         #region Vehicle Property
 
-        public string Type => "Vehicle";
+        public Guid Id { get; set; }
         public int VehicleTypeId { get; set; }
         public string ModelName { get; set; }
         public VehicleType VehicleType { get; set; }

@@ -25,7 +25,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VehicleTypeId)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TypeName)
@@ -34,9 +34,9 @@
                 @Html.DisplayFor(modelItem => item.TaxCoefficient)
             </td>
             <td class="text-center">
-                @Html.ActionLink("View", "VehicleTypeInfo", new {id = item.VehicleTypeId}) |
-                @Html.ActionLink("Edit", "VehicleTypeUpdate", new {id = item.VehicleTypeId}) |
-                @Html.ActionLink("Delete", "VehicleTypeDelete", new {id = item.VehicleTypeId})
+                @Html.ActionLink("View", "VehicleTypeInfo", new {id = item.Id}) |
+                @Html.ActionLink("Edit", "VehicleTypeUpdate", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "VehicleTypeDelete", new {id = item.Id})
             </td>
         </tr>
     }
