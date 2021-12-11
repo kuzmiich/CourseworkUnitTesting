@@ -20,8 +20,10 @@ namespace WebAutopark.Tests.Fixtures
                 new () { Name = "Name" },
                 new () { Name = "Name2" } 
             };
+            
             await Connection.Details.AddRangeAsync(details);
             await Connection.SaveChangesAsync();
+            
             Id = Connection.Details.First().Id;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Entities;
 using WebAutopark.Core.Exceptions;
 using WebAutopark.Tests.Fixtures;
@@ -8,21 +9,21 @@ using Xunit;
 
 namespace WebAutopark.Tests.Repositories
 {
-    public class DetailRepositoryTests : IDisposable
+    public class VehicleRepositoryTests
     {
-        private readonly DetailRepositoryFixture _fixture;
+        private readonly VehicleRepositoryFixture _fixture;
 
-        public DetailRepositoryTests()
+        public VehicleRepositoryTests()
         {
-            _fixture = new DetailRepositoryFixture();
+            _fixture = new VehicleRepositoryFixture();
         }
 
         [Fact]
-        public void GetAll_OK()
+        public async Task GetAll_OK()
         {
-            var detailsFromContext = _fixture.Connection.Details;
+            var detailsFromContext = _fixture.Connection.Vehicles;
             // Act
-            var result = _fixture.Repository.GetAll();
+            var result = await _fixture.Repository.GetAll().ToListAsync();
             
             // Assert
             Assert.NotEmpty(result);
@@ -38,7 +39,7 @@ namespace WebAutopark.Tests.Repositories
             // Assert
             Assert.NotNull(result);
             Assert.Equal(_fixture.Id, result.Id);
-            Assert.Equal("Name", result.Name);
+            Assert.Equal("Name", result.ModelName);
         }
 
         [Fact]
@@ -64,9 +65,9 @@ namespace WebAutopark.Tests.Repositories
         public async Task Create_OK()
         {
             // Arrange
-            var entity = new Detail
+            var entity = new Vehicle
                          {
-                             Name = "Name",
+                             ModelName = "Name",
                          };
 
             // Act
@@ -75,7 +76,7 @@ namespace WebAutopark.Tests.Repositories
             // Assert
             Assert.NotNull(result);
             Assert.NotEqual(default, result);
-            Assert.Equal(entity.Name, result.Name);
+            Assert.Equal(entity.ModelName, result.ModelName);
         }
 
         [Fact]
@@ -89,10 +90,10 @@ namespace WebAutopark.Tests.Repositories
         public void Update_OK()
         {
             // Arrange
-            var entity = new Detail
+            var entity = new Vehicle
                          {
                              Id = _fixture.Id,
-                             Name = "Name",
+                             ModelName = "Name",
                          };
 
             // Act
@@ -101,7 +102,7 @@ namespace WebAutopark.Tests.Repositories
             // Assert
             Assert.NotNull(result);
             Assert.NotEqual(default, result.Id);
-            Assert.Equal(entity.Name, result.Name);
+            Assert.Equal(entity.ModelName, result.ModelName);
         }
 
         [Fact]
@@ -119,7 +120,7 @@ namespace WebAutopark.Tests.Repositories
             await _fixture.Connection.SaveChangesAsync();
             
             // Assert
-            var deletedEntity = await _fixture.Connection.Details.FindAsync(_fixture.Id);
+            var deletedEntity = await _fixture.Connection.Vehicles.FindAsync(_fixture.Id);
             
             Assert.Null(deletedEntity);
         }

@@ -24,7 +24,7 @@ namespace WebAutopark.Tests.Fixtures
             await Connection.Vehicles.AddRangeAsync(vehicles);
             await Connection.SaveChangesAsync();
             
-            Id = Connection.VehicleTypes.First().Id;
+            Id = Connection.Vehicles.First().Id;
         }
     }
 }

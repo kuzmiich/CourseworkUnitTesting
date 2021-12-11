@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Entities;
 using WebAutopark.Core.Exceptions;
 using WebAutopark.Tests.Fixtures;
@@ -8,21 +9,21 @@ using Xunit;
 
 namespace WebAutopark.Tests.Repositories
 {
-    public class DetailRepositoryTests : IDisposable
+    public class VehicleTypeRepositoryTests
     {
-        private readonly DetailRepositoryFixture _fixture;
+        private readonly VehicleTypeRepositoryFixture _fixture;
 
-        public DetailRepositoryTests()
+        public VehicleTypeRepositoryTests()
         {
-            _fixture = new DetailRepositoryFixture();
+            _fixture = new VehicleTypeRepositoryFixture();
         }
 
         [Fact]
-        public void GetAll_OK()
+        public async Task GetAll_OK()
         {
-            var detailsFromContext = _fixture.Connection.Details;
+            var detailsFromContext = _fixture.Connection.VehicleTypes;
             // Act
-            var result = _fixture.Repository.GetAll();
+            var result = await _fixture.Repository.GetAll().ToListAsync();
             
             // Assert
             Assert.NotEmpty(result);
@@ -38,7 +39,7 @@ namespace WebAutopark.Tests.Repositories
             // Assert
             Assert.NotNull(result);
             Assert.Equal(_fixture.Id, result.Id);
-            Assert.Equal("Name", result.Name);
+            Assert.Equal("Name", result.TypeName);
         }
 
         [Fact]
@@ -64,9 +65,9 @@ namespace WebAutopark.Tests.Repositories
         public async Task Create_OK()
         {
             // Arrange
-            var entity = new Detail
+            var entity = new VehicleType
                          {
-                             Name = "Name",
+                             TypeName = "Name",
                          };
 
             // Act
@@ -75,13 +76,13 @@ namespace WebAutopark.Tests.Repositories
             // Assert
             Assert.NotNull(result);
             Assert.NotEqual(default, result);
-            Assert.Equal(entity.Name, result.Name);
+            Assert.Equal(entity.TypeName, result.TypeName);
         }
 
         [Fact]
         public async Task Create_EmptyEntity_Fail()
         {
-            // Arrange Act, Assert
+            // Arrange, Act, Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => _fixture.Repository.Create(null));
         }
 
@@ -89,10 +90,10 @@ namespace WebAutopark.Tests.Repositories
         public void Update_OK()
         {
             // Arrange
-            var entity = new Detail
+            var entity = new VehicleType
                          {
                              Id = _fixture.Id,
-                             Name = "Name",
+                             TypeName = "Name",
                          };
 
             // Act
@@ -101,7 +102,7 @@ namespace WebAutopark.Tests.Repositories
             // Assert
             Assert.NotNull(result);
             Assert.NotEqual(default, result.Id);
-            Assert.Equal(entity.Name, result.Name);
+            Assert.Equal(entity.TypeName, result.TypeName);
         }
 
         [Fact]
@@ -119,7 +120,7 @@ namespace WebAutopark.Tests.Repositories
             await _fixture.Connection.SaveChangesAsync();
             
             // Assert
-            var deletedEntity = await _fixture.Connection.Details.FindAsync(_fixture.Id);
+            var deletedEntity = await _fixture.Connection.VehicleTypes.FindAsync(_fixture.Id);
             
             Assert.Null(deletedEntity);
         }
@@ -133,6 +134,7 @@ namespace WebAutopark.Tests.Repositories
             // Act, Assert
             await Assert.ThrowsAsync<ObjectNotFoundException>(() => _fixture.Repository.Delete(id));
         }
+        
         public void Dispose() => _fixture.Dispose();
     }
 }
