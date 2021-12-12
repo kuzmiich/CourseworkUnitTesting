@@ -28,7 +28,7 @@ namespace WebAutopark.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("/register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -60,7 +60,7 @@ namespace WebAutopark.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("/login")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -80,6 +80,8 @@ namespace WebAutopark.Controllers
         }
         
         
+        [HttpGet("/logout")]
+        [HttpPost("/logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync(); // delete authentication cookies

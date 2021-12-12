@@ -40,9 +40,14 @@
                 @Html.DisplayFor(modelItem => item.ProductAmount)
             </td>
             <td class="text-center">
-                @Html.ActionLink("View", "DetailInfo", new {id = item.Id}) |
-                @Html.ActionLink("Edit", "DetailUpdate", new {id = item.Id}) |
-                @Html.ActionLink("Delete", "DetailDelete", new {id = item.Id})
+                @Html.ActionLink("View", "DetailInfo", new {id = item.Id})
+                @if (User.IsInRole("admin"))
+                { 
+                    <span>|</span>
+                    @Html.ActionLink("Edit", "DetailUpdate", new {id = item.Id})
+                    <span>|</span>
+                    @Html.ActionLink("Delete", "DetailDelete", new {id = item.Id})
+                }
             </td>
         </tr>
     }

@@ -39,7 +39,15 @@ namespace WebAutopark.DataAccess.Extensions
                     options.User.RequireUniqueEmail = true;
                 }).AddEntityFrameworkStores<WebAutoparkContext>()
                 .AddDefaultTokenProviders();
+            
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            });
 
+            
             return services;
         }
         
