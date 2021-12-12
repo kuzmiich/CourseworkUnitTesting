@@ -22,6 +22,8 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = IdentityRoleConstant.User)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> Index()
         {
             var orders = await _orderService.GetAll();
@@ -30,6 +32,8 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = IdentityRoleConstant.User)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> OrderInfo(int id)
         {
             var order = await _orderService.GetById(id);
@@ -37,13 +41,15 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<OrderViewModel>(order));
         }
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstants.User)]
+        [Authorize(Roles = IdentityRoleConstant.User)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public IActionResult OrderCreate()
         {
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstants.User)]
+        [Authorize(Roles = IdentityRoleConstant.User)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> OrderCreate(OrderViewModel order)
         {
             if (ModelState.IsValid)
@@ -55,7 +61,7 @@ namespace WebAutopark.Controllers
             return View();
         }
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> OrderUpdate(int id)
         {
             var updateModel = await _orderService.GetById(id);
@@ -67,7 +73,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OrderUpdate(OrderViewModel order)
         {
@@ -81,7 +87,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("OrderDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
@@ -94,7 +100,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> OrderDelete(int id)
         {
             await _orderService.Delete(id);
