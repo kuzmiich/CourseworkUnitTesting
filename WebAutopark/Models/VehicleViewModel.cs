@@ -14,32 +14,32 @@ namespace WebAutopark.Models
 
         public int Id { get; set; }
         
-        [Required] 
+        [Required(ErrorMessage = "Price is required field")] 
         public decimal Price { get; set; }
         
-        [Required] 
+        [Required(ErrorMessage = "Product amount is required field")] 
         public uint ProductAmount { get; set; }
         
-        [Required] 
+        [Required(ErrorMessage = "VehicleId is required field")] 
         public int VehicleTypeId { get; set; }
 
         public VehicleTypeViewModel VehicleType { get; set; }
         
-        [Required]
-        [StringLength(30, MinimumLength = 5)] 
+        [Required(ErrorMessage = "Model name is required field")] 
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "Error, count of symbol must be more then 5 and less then 30")] 
         public string ModelName { get; set; }
         
-        [Required]
-        [StringLength(30, MinimumLength = 5)] 
+        [Required(ErrorMessage = "Registration number is required field")]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "Error, count of symbol must be more then 5 and less then 30")] 
         public string RegistrationNumber { get; set; }
         [Required]
-        [Range(1980, int.MaxValue)] 
+        [Range(1980, int.MaxValue, ErrorMessage = "Error, this registration number is less then 1980")] 
         public int ManufactureYear { get; set; }
         [Required]
-        [Range(0, int.MaxValue)] 
+        [Range(0, int.MaxValue, ErrorMessage = "Error, this weight is less then 0")] 
         public int Weight { get; set; }
         [Required]
-        [Range(0, int.MaxValue)] 
+        [Range(0, int.MaxValue, ErrorMessage = "Error, this mileage is less then 0")] 
         public int Mileage { get; set; }
         [Required]
         [Range(1, 8)] 

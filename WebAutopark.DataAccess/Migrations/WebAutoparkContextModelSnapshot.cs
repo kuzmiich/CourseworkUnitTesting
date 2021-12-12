@@ -267,7 +267,12 @@ namespace WebAutopark.DataAccess.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -387,6 +392,17 @@ namespace WebAutopark.DataAccess.Migrations
                     b.HasOne("WebAutopark.Core.Entities.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("WebAutopark.Core.Entities.Order", b =>
+                {
+                    b.HasOne("WebAutopark.Core.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebAutopark.Core.Entities.Vehicle", b =>
