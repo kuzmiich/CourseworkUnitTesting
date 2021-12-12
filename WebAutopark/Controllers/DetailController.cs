@@ -54,9 +54,7 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                var detail2 = _mapper.Map<DetailModel>(detail);
-                
-                await _detailService.Create(detail2);
+                await _detailService.Create(_mapper.Map<DetailModel>(detail));
                 return RedirectToAction("Index");
             }
 

@@ -24,6 +24,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfiles(new Profile[]
     new ConfigureBusinessLayerProfile(),
     new ConfigureViewModelProfile()
 }));
+
 // Configure application and environment 
 using var app = builder.Build();
 
