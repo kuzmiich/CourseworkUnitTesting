@@ -31,7 +31,7 @@ namespace WebAutopark.BusinessLayer.Services.Base
                                  .ToListAsync();
         }
 
-        public async Task<TModel> GetById(Guid id)
+        public async Task<TModel> GetById(int id)
         {
             var entity = await Repository.GetById(id);
 
@@ -56,7 +56,7 @@ namespace WebAutopark.BusinessLayer.Services.Base
 
             return Mapper.Map<TModel>(updatedEntity);
         }
-        public async Task Delete(Guid id)
+        public async Task Delete(int id)
         {
             await Repository.Delete(id);
             await Repository.Save();

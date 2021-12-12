@@ -4,9 +4,9 @@ namespace WebAutopark.Core.Exceptions
 {
     public static class RepositoryException
     {
-        public static void IsIdValid(Guid id)
+        public static void IsIdValid(int id)
         {
-            if (id.CompareTo(Guid.Empty) <= 0)// <= 0
+            if (id <= 0)
             {
                 throw new InvalidArgumentException(nameof(id));
             }

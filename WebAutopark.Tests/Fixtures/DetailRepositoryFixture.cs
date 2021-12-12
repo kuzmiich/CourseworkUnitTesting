@@ -10,7 +10,7 @@ namespace WebAutopark.Tests.Fixtures
 {
     internal class DetailRepositoryFixture : RepositoryFixture<DetailRepository>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         protected override DetailRepository CreateRepository() => new (Connection);
 
         protected override async Task InitDatabase()

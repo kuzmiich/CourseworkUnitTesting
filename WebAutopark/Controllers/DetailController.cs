@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using WebAutopark.BusinessLayer.Interfaces;
 using WebAutopark.BusinessLayer.Models;
+using WebAutopark.Core.Constants;
 using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
@@ -30,7 +32,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailInfo(Guid id)
+        public async Task<IActionResult> DetailInfo(int id)
         {
             var model = await _detailService.GetById(id);
 
@@ -52,7 +54,9 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _detailService.Create(_mapper.Map<DetailModel>(detail));
+                var detail2 = _mapper.Map<DetailModel>(detail);
+                
+                await _detailService.Create(detail2);
                 return RedirectToAction("Index");
             }
 
@@ -60,7 +64,8 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailUpdate(Guid id)
+        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        public async Task<IActionResult> DetailUpdate(int id)
         {
             var updateModel = await _detailService.GetById(id);
 
@@ -71,6 +76,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = IdentityRoleConstants.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DetailUpdate(DetailViewModel detail)
         {
@@ -84,8 +90,9 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = IdentityRoleConstants.Admin)]
         [ActionName("DetailDelete")]
-        public async Task<IActionResult> ConfirmDelete(Guid id)
+        public async Task<IActionResult> ConfirmDelete(int id)
         {
             var deleteModel = await _detailService.GetById(id);
 
@@ -96,7 +103,8 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DetailDelete(Guid id)
+        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        public async Task<IActionResult> DetailDelete(int id)
         {
             await _detailService.Delete(id);
 

@@ -9,12 +9,12 @@ namespace WebAutopark.BusinessLayer.Interfaces.Base
     {
         Task<List<TModel>> GetAll();
         
-        Task<TModel> GetById(Guid id);
+        Task<TModel> GetById(int id);
         
         Task<TModel> Create(TModel entity);
 
         Task<TModel> Update(TModel model);
 
-        Task Delete(Guid id);
+        Task Delete(int id);
     }
 }

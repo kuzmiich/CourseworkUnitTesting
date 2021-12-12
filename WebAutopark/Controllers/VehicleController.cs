@@ -41,7 +41,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> VehicleInfo(Guid id)
+        public async Task<IActionResult> VehicleInfo(int id)
         {
             var getModel = await _vehicleService.GetById(id);
 
@@ -71,7 +71,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> VehicleUpdate(Guid id)
+        public async Task<IActionResult> VehicleUpdate(int id)
         {
             var updateModel = await _vehicleService.GetById(id);
 
@@ -96,7 +96,7 @@ namespace WebAutopark.Controllers
 
         [HttpGet]
         [ActionName("VehicleDelete")]
-        public async Task<IActionResult> ConfirmDelete(Guid id)
+        public async Task<IActionResult> ConfirmDelete(int id)
         {
             var deleteModel = await _vehicleService.GetById(id);
 
@@ -107,7 +107,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VehicleDelete(Guid id)
+        public async Task<IActionResult> VehicleDelete(int id)
         {
             await _vehicleService.Delete(id);
 

@@ -46,7 +46,7 @@ namespace WebAutopark.Tests.Repositories
         public async Task GetById_EmptyId_Fail()
         {
             // Arrange
-            var id = Guid.Empty;
+            var id = -1;
             // Act, Assert
             await Assert.ThrowsAsync<InvalidArgumentException>(() => _fixture.Repository.GetById(id));
         }
@@ -55,7 +55,7 @@ namespace WebAutopark.Tests.Repositories
         public async Task GetById_NotExistDirection_Fail()
         {
             // Arrange
-            var id = Guid.Parse("99999999-9999-9999-9999-999999999999");
+            var id = int.MaxValue;
 
             // Act, Assert
             await Assert.ThrowsAsync<ObjectNotFoundException>(() => _fixture.Repository.GetById(id));
@@ -129,7 +129,7 @@ namespace WebAutopark.Tests.Repositories
         public async Task Delete_EmptyId_Fail()
         {
             // Arrange
-            var id = Guid.Empty;
+            var id = 0;
 
             // Act, Assert
             await Assert.ThrowsAsync<ObjectNotFoundException>(() => _fixture.Repository.Delete(id));

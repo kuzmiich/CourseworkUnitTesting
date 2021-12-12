@@ -21,16 +21,18 @@ function upload() {
 }
 
 async function main() {
-    upload();
+    if (window.location.pathname === '/Vehicle')
+    {
+        upload();
 
-    const time = new Date(Date.now() + 3600e3);
-    document.getElementById("criteria").addEventListener("change", () => {
-        setCriteriaCookie(time);
-    });
-    document.getElementById("isAscending").addEventListener("click", () => {
-        setAscendingCookie(time);
-    });
-
+        const time = new Date(Date.now() + 3600e3);
+        document.getElementById("criteria").addEventListener("change", () => {
+            setCriteriaCookie(time);
+        });
+        document.getElementById("isAscending").addEventListener("click", () => {
+            setAscendingCookie(time);
+        });
+    }
 }
 
 main();

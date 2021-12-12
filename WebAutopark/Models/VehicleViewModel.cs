@@ -12,30 +12,38 @@ namespace WebAutopark.Models
 
         #region Vehicle Property
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        
+        [Required] 
+        public decimal Price { get; set; }
+        
+        [Required] 
+        public uint ProductAmount { get; set; }
+        
         [Required] 
         public int VehicleTypeId { get; set; }
 
         public VehicleTypeViewModel VehicleType { get; set; }
+        
+        [Required]
         [StringLength(30, MinimumLength = 5)] 
         public string ModelName { get; set; }
+        
+        [Required]
         [StringLength(30, MinimumLength = 5)] 
         public string RegistrationNumber { get; set; }
+        [Required]
         [Range(1980, int.MaxValue)] 
         public int ManufactureYear { get; set; }
+        [Required]
         [Range(0, int.MaxValue)] 
         public int Weight { get; set; }
+        [Required]
         [Range(0, int.MaxValue)] 
         public int Mileage { get; set; }
+        [Required]
         [Range(1, 8)] 
         public ColorType Color { get; set; }
-        [Range(0, double.MaxValue)] 
-        
-
-        public virtual double GetCalcTaxPerMonth => (VehicleType is not null)
-            ? Math.Round(Weight * WeightCoefficient +
-                         VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2)
-            : 0d;
 
         #endregion
     }

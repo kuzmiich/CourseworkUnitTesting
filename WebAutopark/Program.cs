@@ -1,7 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAutopark.BusinessLayer.Extensions;
+using WebAutopark.BusinessLayer.MappingProfiles;
+using WebAutopark.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,11 @@ builder.Services.AddControllersWithViews();
 // added my repositories, services, context, automapper and identity configuration
 builder.Services.AddCustomSolutionConfigs(builder.Configuration);
 
+builder.Services.AddAutoMapper(cfg => cfg.AddProfiles(new Profile[]
+{
+    new ConfigureBusinessLayerProfile(),
+    new ConfigureViewModelProfile()
+}));
 // Configure application and environment 
 using var app = builder.Build();
 

@@ -30,7 +30,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
             return Set.AsNoTracking();
         }
 
-        public virtual async Task<TEntity> GetById(Guid id)
+        public virtual async Task<TEntity> GetById(int id)
         {
             RepositoryException.IsIdValid(id);
 
@@ -57,7 +57,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
             return entity;
         }
 
-        public virtual async Task Delete(Guid id)
+        public virtual async Task Delete(int id)
         {
             var deletedEntity = await Set.FindAsync(id);
 

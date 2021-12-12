@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAutopark.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,10 +51,25 @@ namespace WebAutopark.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VehicleTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TypeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TaxCoefficient = table.Column<double>(type: "float", nullable: false)
                 },
@@ -173,37 +188,35 @@ namespace WebAutopark.DataAccess.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductModelProductId = table.Column<int>(type: "int", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductAmount = table.Column<long>(type: "bigint", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: true),
                     ModelName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VehicleTypeId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManufactureYear = table.Column<int>(type: "int", nullable: true),
                     Weight = table.Column<int>(type: "int", nullable: true),
                     Mileage = table.Column<int>(type: "int", nullable: true),
-                    Color = table.Column<int>(type: "int", nullable: true),
-                    EngineConsumption = table.Column<double>(type: "float", nullable: true),
-                    TankCapacity = table.Column<double>(type: "float", nullable: true)
+                    Color = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Product_ProductModelProductId",
-                        column: x => x.ProductModelProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId");
-                    table.ForeignKey(
-                        name: "FK_Product_VehicleTypes_VehicleTypeId1",
-                        column: x => x.VehicleTypeId1,
-                        principalTable: "VehicleTypes",
+                        name: "FK_Product_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Product_VehicleTypes_VehicleTypeId",
+                        column: x => x.VehicleTypeId,
+                        principalTable: "VehicleTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -246,14 +259,14 @@ namespace WebAutopark.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_ProductModelProductId",
+                name: "IX_Product_OrderId",
                 table: "Product",
-                column: "ProductModelProductId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_VehicleTypeId1",
+                name: "IX_Product_VehicleTypeId",
                 table: "Product",
-                column: "VehicleTypeId1");
+                column: "VehicleTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -281,6 +294,9 @@ namespace WebAutopark.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "VehicleTypes");

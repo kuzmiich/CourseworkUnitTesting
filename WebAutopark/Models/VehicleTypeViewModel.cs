@@ -5,8 +5,8 @@ namespace WebAutopark.Models
 {
     public class VehicleTypeViewModel
     {
-        public Guid Id { get; set; }
-
+        public int Id { get; set; }
+        [Required(ErrorMessage = "")]
         [StringLength(30, MinimumLength = 5)] 
         public string TypeName { get; set; }
 

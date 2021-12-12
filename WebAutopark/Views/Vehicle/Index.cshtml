@@ -83,7 +83,7 @@
                 @Html.ActionLink("View", "VehicleInfo", new {id = item.Id}) |
                 @Html.ActionLink("Edit", "VehicleUpdate", new {id = item.Id}) |
                 @Html.ActionLink("Delete", "VehicleDelete", new {id = item.Id})
-                @using (Html.BeginForm("Create", "Order", new {id = item.Id}, FormMethod.Post))
+                @using (Html.BeginForm("OrderCreate", "Order", new {id = item.Id}, FormMethod.Post))
                 {
                     @Html.TextBoxFor(v => item.Id, new {@readonly = "readonly", @hidden = "hidden"})
                     <button type="submit" class="btn btn-link p-0">Create order</button>

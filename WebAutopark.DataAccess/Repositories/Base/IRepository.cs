@@ -8,12 +8,12 @@ namespace WebAutopark.DataAccess.Repositories.Base
     public interface IRepository<T> : IDisposable, IAsyncDisposable
     {
         IQueryable<T> GetAll();
-        Task<T> GetById(Guid id);
+        Task<T> GetById(int id);
 
         Task<T> Create(T element);
         T Update(T element);
 
         Task Save();
-        Task Delete(Guid id);
+        Task Delete(int id);
     }
 }

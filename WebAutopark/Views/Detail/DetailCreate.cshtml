@@ -7,7 +7,7 @@
         <h2 class="mb-2 text-center">Create Detail</h2>
     </div>
     <div class="card-body">
-        <form asp-action="DetailCreate">
+        <form asp-action="DetailCreate" asp-controller="Detail" asp-antiforgery="true">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label ml-md-1"></label>

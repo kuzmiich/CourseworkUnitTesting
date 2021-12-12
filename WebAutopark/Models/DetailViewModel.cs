@@ -5,7 +5,7 @@ namespace WebAutopark.Models
 {
     public class DetailViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(30, MinimumLength = 4)] 
         public string Name { get; set; }

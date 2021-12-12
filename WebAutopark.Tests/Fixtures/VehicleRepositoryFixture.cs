@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAutopark.Core.Entities;
@@ -10,7 +9,7 @@ namespace WebAutopark.Tests.Fixtures
 {
     internal class VehicleRepositoryFixture : RepositoryFixture<VehicleRepository>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         protected override VehicleRepository CreateRepository() => new (Connection);
 
         protected override async Task InitDatabase()

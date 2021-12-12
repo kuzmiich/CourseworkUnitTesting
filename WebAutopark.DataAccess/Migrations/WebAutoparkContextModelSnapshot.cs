@@ -157,16 +157,18 @@ namespace WebAutopark.DataAccess.Migrations
 
             modelBuilder.Entity("WebAutopark.Core.Entities.Base.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -183,41 +185,7 @@ namespace WebAutopark.DataAccess.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Product");
                 });
 
-            modelBuilder.Entity("WebAutopark.Core.Entities.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("WebAutopark.Core.Entities.VehicleType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("TaxCoefficient")
-                        .HasColumnType("float");
-
-                    b.Property<string>("TypeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VehicleTypes");
-                });
-
-            modelBuilder.Entity("WebAutopark.Identity.Models.User", b =>
+            modelBuilder.Entity("WebAutopark.Core.Entities.Identity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,6 +253,44 @@ namespace WebAutopark.DataAccess.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WebAutopark.Core.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("WebAutopark.Core.Entities.VehicleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("TaxCoefficient")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleTypes");
+                });
+
             modelBuilder.Entity("WebAutopark.Core.Entities.Detail", b =>
                 {
                     b.HasBaseType("WebAutopark.Core.Entities.Base.Product");
@@ -302,9 +308,6 @@ namespace WebAutopark.DataAccess.Migrations
                     b.Property<int>("Color")
                         .HasColumnType("int");
 
-                    b.Property<double>("EngineConsumption")
-                        .HasColumnType("float");
-
                     b.Property<int>("ManufactureYear")
                         .HasColumnType("int");
 
@@ -317,19 +320,13 @@ namespace WebAutopark.DataAccess.Migrations
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("TankCapacity")
-                        .HasColumnType("float");
-
                     b.Property<int>("VehicleTypeId")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("VehicleTypeId1")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
-                    b.HasIndex("VehicleTypeId1");
+                    b.HasIndex("VehicleTypeId");
 
                     b.HasDiscriminator().HasValue("Vehicle");
                 });
@@ -345,7 +342,7 @@ namespace WebAutopark.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("WebAutopark.Identity.Models.User", null)
+                    b.HasOne("WebAutopark.Core.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -354,7 +351,7 @@ namespace WebAutopark.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("WebAutopark.Identity.Models.User", null)
+                    b.HasOne("WebAutopark.Core.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,7 +366,7 @@ namespace WebAutopark.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAutopark.Identity.Models.User", null)
+                    b.HasOne("WebAutopark.Core.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -378,7 +375,7 @@ namespace WebAutopark.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("WebAutopark.Identity.Models.User", null)
+                    b.HasOne("WebAutopark.Core.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -396,7 +393,9 @@ namespace WebAutopark.DataAccess.Migrations
                 {
                     b.HasOne("WebAutopark.Core.Entities.VehicleType", "VehicleType")
                         .WithMany()
-                        .HasForeignKey("VehicleTypeId1");
+                        .HasForeignKey("VehicleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("VehicleType");
                 });

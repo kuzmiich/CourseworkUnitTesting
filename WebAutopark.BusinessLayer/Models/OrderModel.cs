@@ -6,7 +6,7 @@ namespace WebAutopark.BusinessLayer.Models
 {
     public class OrderModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         
         public List<Product> Products { get; set; }
 
