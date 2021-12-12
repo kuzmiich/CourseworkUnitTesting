@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebAutopark.Core.Constants;
 using WebAutopark.Core.Entities.Identity;
+using WebAutopark.Core.Extensions;
 using WebAutopark.Models.Identity;
 
 namespace WebAutopark.Controllers
@@ -33,13 +35,10 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { Email = model.Email, UserName = model.Email };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateUser(model.Email, model.Password, IdentityRoleConstant.User);
+                
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
-
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -80,8 +79,7 @@ namespace WebAutopark.Controllers
         }
         
         
-        [HttpGet("/logout")]
-        [HttpPost("/logout")]
+        [Route("/logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync(); // delete authentication cookies

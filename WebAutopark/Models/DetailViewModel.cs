@@ -11,9 +11,7 @@ namespace WebAutopark.Models
         public string Name { get; set; }
         
         [Required(ErrorMessage = "Price is required field")]
+        [Range(1d, double.MaxValue)]
         public decimal Price { get; set; }
-        
-        [Required(ErrorMessage = "Product amount is required field")]
-        public uint ProductAmount { get; set; }
     }
 }

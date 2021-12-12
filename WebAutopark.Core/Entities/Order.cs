@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebAutopark.Core.Entities.Base;
 using WebAutopark.Core.Entities.Identity;
 
@@ -14,6 +15,6 @@ namespace WebAutopark.Core.Entities
 
         public string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal Price => Products.Sum(p => p.Price * p.ProductAmount);
     }
 }
