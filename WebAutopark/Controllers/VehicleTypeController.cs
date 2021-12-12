@@ -42,14 +42,14 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public IActionResult VehicleTypeCreate()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VehicleTypeCreate(VehicleTypeViewModel vehicleTypeViewModel)
         {
@@ -64,6 +64,7 @@ namespace WebAutopark.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> VehicleTypeUpdate(int id)
         {
             var updatedModel = await _vehicleTypeService.GetById(id);
@@ -75,6 +76,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VehicleTypeUpdate(VehicleTypeViewModel vehicleType)
         {
@@ -88,6 +90,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("VehicleTypeDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
@@ -100,6 +103,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> VehicleTypeDelete(int id)
         {
             await _vehicleTypeService.Delete(id);

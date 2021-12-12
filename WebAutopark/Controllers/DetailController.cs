@@ -64,7 +64,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> DetailUpdate(int id)
         {
             var updateModel = await _detailService.GetById(id);
@@ -76,7 +76,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DetailUpdate(DetailViewModel detail)
         {
@@ -90,7 +90,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("DetailDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
@@ -103,7 +103,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstants.Admin)]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> DetailDelete(int id)
         {
             await _detailService.Delete(id);
