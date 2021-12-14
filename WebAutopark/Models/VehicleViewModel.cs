@@ -10,15 +10,10 @@ namespace WebAutopark.Models
         private const double ShiftForTax = 5d;
         private const double TaxCoefficient = 30d;
 
-        #region Vehicle Property
-
         public int Id { get; set; }
         
         [Required(ErrorMessage = "Price is required field")] 
         public decimal Price { get; set; }
-        
-        [Required(ErrorMessage = "Product amount is required field")] 
-        public uint ProductAmount { get; set; }
         
         [Required(ErrorMessage = "VehicleId is required field")] 
         public int VehicleTypeId { get; set; }
@@ -44,7 +39,10 @@ namespace WebAutopark.Models
         [Required]
         [Range(1, 8)] 
         public ColorType Color { get; set; }
-
-        #endregion
+        
+        
+        public virtual double GetCalcTaxPerMonth => (VehicleType is not null)
+            ? Math.Round(Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2)
+            : 0d;
     }
 }

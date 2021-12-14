@@ -1,4 +1,4 @@
-@model IEnumerable<WebAutopark.Models.VehicleViewModel>
+@model IEnumerable<VehicleViewModel>
 
 @{ ViewData["Title"] = "VehicleList"; }
 
@@ -47,7 +47,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Color)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
         <th></th>
     </tr>
     </thead>
@@ -78,6 +80,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td class="text-center" style="min-width: 160px">
                 @Html.ActionLink("View", "VehicleInfo", new {id = item.Id}) |

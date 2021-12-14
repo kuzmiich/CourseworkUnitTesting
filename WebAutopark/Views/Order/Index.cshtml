@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebAutopark.Models.OrderViewModel>
+﻿@model IEnumerable<OrderViewModel>
 
 @{
     ViewData["Title"] = "OrderList";
@@ -10,6 +10,12 @@
     <tr>
         <th width="5%">
             @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th width="5%">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th width="5%">
+            @Html.DisplayNameFor(model => model.Products)
         </th>
     </tr>
     </thead>

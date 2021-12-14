@@ -26,7 +26,9 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfiles(new Profile[]
 }));
 
 // Configure application and environment 
-using var app = builder.Build();
+await using var app = builder.Build();
+
+await app.ContextSeedData();
 
 if (app.Environment.IsDevelopment())
 {
@@ -50,4 +52,4 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
 
-app.Run();
+await app.RunAsync();

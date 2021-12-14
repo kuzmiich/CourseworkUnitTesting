@@ -21,4 +21,16 @@
         <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="WebAutopark\**" />
+    </ItemGroup>
+
 </Project>

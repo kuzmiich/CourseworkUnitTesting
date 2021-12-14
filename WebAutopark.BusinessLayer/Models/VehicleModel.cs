@@ -6,10 +6,6 @@ namespace WebAutopark.BusinessLayer.Models
 {
     public class VehicleModel
     {
-        private const double WeightCoefficient = 0.0013d;
-        private const double ShiftForTax = 5d;
-        private const double TaxCoefficient = 30d;
-
         public int Id { get; set; }
         
         public decimal Price { get; set; }
@@ -29,9 +25,5 @@ namespace WebAutopark.BusinessLayer.Models
         public int Mileage { get; set; }
         
         public ColorType Color { get; set; }
-
-        public virtual double GetCalcTaxPerMonth => (VehicleType is not null)
-            ? Math.Round(Weight * WeightCoefficient + VehicleType.TaxCoefficient * TaxCoefficient + ShiftForTax, 2)
-            : 0d;
     }
 }

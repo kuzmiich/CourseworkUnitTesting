@@ -55,4 +55,12 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Detail\DetailCreate.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\DetailDelete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\DetailInfo.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\DetailUpdate.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\Index.cshtml" />
+    </ItemGroup>
+
 </Project>

@@ -16,7 +16,5 @@ namespace WebAutopark.BusinessLayer.Models
         public List<Product> Products { get; set; }
 
         public string Description { get; set; }
-
-        public decimal Price { get; set; }
     }
 }
