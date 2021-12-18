@@ -13,7 +13,9 @@ namespace WebAutopark.DataAccess.Extensions
     {
         public static IServiceCollection AddDatabaseDependencies(this IServiceCollection services)
         {
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+            services.AddScoped<ICartRepository<ShoppingCartItem>, ShoppingCartRepository>();
+            
+            services.AddScoped<IRepository<Product>, ProductRepository>();
 
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
 
@@ -22,7 +24,7 @@ namespace WebAutopark.DataAccess.Extensions
             return services;
         }
         
-        public static IServiceCollection AddIdentityContext(this IServiceCollection services)
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services)
         {
             services.AddIdentity<User, IdentityRole<int>>(options =>
                 {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Exceptions;
-using static System.GC;
 
 namespace WebAutopark.DataAccess.Repositories.Base
 {
@@ -15,7 +12,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
     public class BaseRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        protected static bool _disposed = false;
+        private static bool _disposed = false;
         private readonly WebAutoparkContext _context;
         protected readonly DbSet<TEntity> Set;
 
