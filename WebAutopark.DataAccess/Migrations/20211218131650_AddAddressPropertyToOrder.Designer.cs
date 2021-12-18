@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAutopark.DataAccess;
 
@@ -11,9 +12,10 @@ using WebAutopark.DataAccess;
 namespace WebAutopark.DataAccess.Migrations
 {
     [DbContext(typeof(WebAutoparkContext))]
-    partial class WebAutoparkContextModelSnapshot : ModelSnapshot
+    [Migration("20211218131650_AddAddressPropertyToOrder")]
+    partial class AddAddressPropertyToOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

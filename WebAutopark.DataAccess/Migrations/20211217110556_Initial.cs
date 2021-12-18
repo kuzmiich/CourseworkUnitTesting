@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAutopark.DataAccess.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,17 +51,19 @@ namespace WebAutopark.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,38 +187,49 @@ namespace WebAutopark.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ProductAmount = table.Column<long>(type: "bigint", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: true),
-                    ModelName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ManufactureYear = table.Column<int>(type: "int", nullable: true),
-                    Weight = table.Column<int>(type: "int", nullable: true),
-                    Mileage = table.Column<int>(type: "int", nullable: true),
-                    Color = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Orders_OrderId",
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    ShoppingCartId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Product_VehicleTypes_VehicleTypeId",
-                        column: x => x.VehicleTypeId,
-                        principalTable: "VehicleTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_ShoppingCartItems_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -259,14 +272,19 @@ namespace WebAutopark.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_OrderId",
-                table: "Product",
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartItems_OrderId",
+                table: "ShoppingCartItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_VehicleTypeId",
-                table: "Product",
-                column: "VehicleTypeId");
+                name: "IX_ShoppingCartItems_ProductId",
+                table: "ShoppingCartItems",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -287,19 +305,22 @@ namespace WebAutopark.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "ShoppingCartItems");
+
+            migrationBuilder.DropTable(
+                name: "VehicleTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "VehicleTypes");
+                name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

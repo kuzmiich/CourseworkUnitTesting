@@ -12,14 +12,14 @@ using WebAutopark.DataAccess;
 namespace WebAutopark.DataAccess.Migrations
 {
     [DbContext(typeof(WebAutoparkContext))]
-    [Migration("20211212120845_UpdateOrder")]
-    partial class UpdateOrder
+    [Migration("20211217163221_Initial2")]
+    partial class Initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -157,36 +157,6 @@ namespace WebAutopark.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebAutopark.Core.Entities.Base.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("ProductAmount")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Product");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Product");
-                });
-
             modelBuilder.Entity("WebAutopark.Core.Entities.Identity.User", b =>
                 {
                     b.Property<int>("Id")
@@ -266,20 +236,68 @@ namespace WebAutopark.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("WebAutopark.Core.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("WebAutopark.Core.Entities.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("WebAutopark.Core.Entities.VehicleType", b =>
@@ -299,46 +317,6 @@ namespace WebAutopark.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleTypes");
-                });
-
-            modelBuilder.Entity("WebAutopark.Core.Entities.Detail", b =>
-                {
-                    b.HasBaseType("WebAutopark.Core.Entities.Base.Product");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Detail");
-                });
-
-            modelBuilder.Entity("WebAutopark.Core.Entities.Vehicle", b =>
-                {
-                    b.HasBaseType("WebAutopark.Core.Entities.Base.Product");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ManufactureYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Mileage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ModelName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegistrationNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
-
-                    b.HasIndex("VehicleTypeId");
-
-                    b.HasDiscriminator().HasValue("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -392,36 +370,35 @@ namespace WebAutopark.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAutopark.Core.Entities.Base.Product", b =>
-                {
-                    b.HasOne("WebAutopark.Core.Entities.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-                });
-
             modelBuilder.Entity("WebAutopark.Core.Entities.Order", b =>
                 {
                     b.HasOne("WebAutopark.Core.Entities.Identity.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebAutopark.Core.Entities.Vehicle", b =>
+            modelBuilder.Entity("WebAutopark.Core.Entities.ShoppingCartItem", b =>
                 {
-                    b.HasOne("WebAutopark.Core.Entities.VehicleType", "VehicleType")
+                    b.HasOne("WebAutopark.Core.Entities.Order", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("WebAutopark.Core.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("VehicleTypeId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("VehicleType");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebAutopark.Core.Entities.Order", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }
