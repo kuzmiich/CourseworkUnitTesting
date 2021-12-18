@@ -24,13 +24,13 @@ namespace WebAutopark.Controllers
             _logger = logger;
         }
 
-        [HttpGet("/register")]
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        [HttpPost("/register")]
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -53,13 +53,13 @@ namespace WebAutopark.Controllers
             return View(model);
         }
 
-        [HttpGet("/login")]
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        [HttpPost("/login")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {

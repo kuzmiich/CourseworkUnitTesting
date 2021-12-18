@@ -4,26 +4,29 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using WebAutopark.BusinessLayer.Interfaces;
+using WebAutopark.BusinessLayer.Interfaces.Base;
 using WebAutopark.BusinessLayer.Models;
 using WebAutopark.Core.Constants;
+using WebAutopark.Core.Entities;
 using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
     public class OrderController : Controller
     {
+        private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
-        public OrderController(IOrderService orderService, IMapper mapper)
+        public OrderController(IOrderService orderService, IMapper mapper, ICartService cartService)
         {
             _orderService = orderService;
             _mapper = mapper;
+            _cartService = cartService;
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstant.User)]
-        [Authorize(Roles = IdentityRoleConstant.Admin)]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var orders = await _orderService.GetAll();
@@ -32,8 +35,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstant.User)]
-        [Authorize(Roles = IdentityRoleConstant.Admin)]
+        [Authorize]
         public async Task<IActionResult> OrderInfo(int id)
         {
             var order = await _orderService.GetById(id);
@@ -41,15 +43,20 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<OrderViewModel>(order));
         }
         [HttpGet]
-        [Authorize(Roles = IdentityRoleConstant.User)]
-        [Authorize(Roles = IdentityRoleConstant.Admin)]
-        public IActionResult OrderCreate()
+        [Authorize]
+        public async Task<IActionResult> OrderCreate()
         {
-            return View();
+            var cartItemModels = await _cartService.GetAll();
+            var cartItemViewModels = _mapper.Map<List<ShoppingCartItemViewModel>>(cartItemModels);
+            
+            var orderViewModel = new OrderViewModel()
+            {
+                CartItems = cartItemViewModels
+            };
+            return View(orderViewModel);
         }
         [HttpPost]
-        [Authorize(Roles = IdentityRoleConstant.User)]
-        [Authorize(Roles = IdentityRoleConstant.Admin)]
+        [Authorize]
         public async Task<IActionResult> OrderCreate(OrderViewModel order)
         {
             if (ModelState.IsValid)
@@ -58,7 +65,12 @@ namespace WebAutopark.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();
+            var orderViewModel = new OrderViewModel
+            {
+                CartItems = _mapper.Map<List<ShoppingCartItemViewModel>>(_cartService.GetAll())
+            };
+
+            return View(orderViewModel);
         }
         [HttpGet]
         [Authorize(Roles = IdentityRoleConstant.Admin)]

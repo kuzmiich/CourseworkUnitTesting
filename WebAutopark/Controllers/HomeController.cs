@@ -1,6 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebAutopark.BusinessLayer.Interfaces;
+using WebAutopark.DataAccess.Repositories.Base;
 using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
@@ -8,15 +13,21 @@ namespace WebAutopark.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService _productService;
+        private readonly IMapper _mapper;
+        public HomeController(ILogger<HomeController> logger, IProductService productService, IMapper mapper)
         {
             _logger = logger;
+            _productService = productService;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = _mapper.Map<List<ProductViewModel>>(await _productService.GetAll());
+            
+            return View(products ?? new List<ProductViewModel>());
         }
 
         /// <summary>
@@ -34,7 +45,15 @@ namespace WebAutopark.Controllers
 
             return RedirectToAction("Index");
         }
+        
 
+        [HttpGet("/Privacy")]
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [HttpGet("/Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
