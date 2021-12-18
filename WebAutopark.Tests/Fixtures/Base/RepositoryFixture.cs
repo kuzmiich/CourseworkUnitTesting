@@ -7,7 +7,7 @@ using WebAutopark.DataAccess;
 
 namespace WebAutopark.Tests.Fixtures.Base
 {
-    internal abstract class RepositoryFixture<TRepository> : IDisposable, IAsyncDisposable
+    public abstract class RepositoryFixture<TRepository> : IDisposable, IAsyncDisposable
     {
         internal RepositoryFixture()
         {
