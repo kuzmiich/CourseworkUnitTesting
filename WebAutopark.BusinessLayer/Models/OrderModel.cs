@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using WebAutopark.Core.Entities.Base;
+﻿using System.Collections.Generic;
+using WebAutopark.Core.Entities;
 using WebAutopark.Core.Entities.Identity;
 
 namespace WebAutopark.BusinessLayer.Models
@@ -12,8 +11,12 @@ namespace WebAutopark.BusinessLayer.Models
         public User User { get; set; }
         
         public int Id { get; set; }
+
+        public decimal Price { get; }
         
-        public List<Product> Products { get; set; }
+        public string Address { get; set; }
+        
+        public List<ShoppingCartItemModel> CartItems { get; set; }
 
         public string Description { get; set; }
     }
