@@ -8,9 +8,9 @@ namespace WebAutopark.MappingProfiles
     {
         public ConfigureViewModelProfile()
         {
-            CreateMap<DetailModel, DetailViewModel>()
+            CreateMap<ProductModel, ProductViewModel>()
                 .ReverseMap();
-            CreateMap<VehicleModel, VehicleViewModel>()
+            CreateMap<ShoppingCartItemModel, ShoppingCartItemViewModel>()
                 .ReverseMap();
             CreateMap<VehicleTypeModel, VehicleTypeViewModel>()
                 .ReverseMap();

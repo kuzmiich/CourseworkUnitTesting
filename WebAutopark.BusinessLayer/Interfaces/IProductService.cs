@@ -3,8 +3,7 @@ using WebAutopark.BusinessLayer.Models;
 
 namespace WebAutopark.BusinessLayer.Interfaces
 {
-    public interface IDetailService : IService<DetailModel>
+    public interface IProductService : IService<ProductModel>
     {
-
     }
 }
