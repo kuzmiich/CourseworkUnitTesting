@@ -1,5 +1,33 @@
-﻿@{
+﻿@model List<ProductViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-Products
+<div class="d-flex justify-content-between mt-2 mb-2">
+    <h2>Shop</h2>
+    @if (User.Identity!.IsAuthenticated)
+    {
+        <a class="btn btn-primary p-2" id="btn-basket" asp-controller="ShoppingCart" asp-action="Index">
+            <img src="~/img/basket.svg" alt="basket" class="mr-1">
+            <span>Корзина</span>
+        </a>
+    }
+</div>
+@*@{
+    await Html.RenderPartialAsync("_Carousel");
+}*@
+
+<div class="row">
+    @if (Model != null)
+    {
+        @foreach (var product in Model)
+        {
+            await Html.RenderPartialAsync("_ProductSummary", product);
+        }    
+    }
+    else
+    {
+        <p class="m-5 pt-2">Items out of stock</p>
+    }
+</div>

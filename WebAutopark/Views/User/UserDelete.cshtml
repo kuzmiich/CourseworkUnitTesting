@@ -1,7 +1,7 @@
-﻿@model VehicleTypeViewModel
+﻿@model WebAutopark.Core.Entities.Identity.User
 
 @{
-    ViewData["Title"] = "VehicleTypeDelete";
+    ViewData["Title"] = "UserDelete";
 }
 
 <div class="card col-md-7 m-auto">
@@ -10,15 +10,15 @@
     </div>
     <div class="card-body">
         <h4 class="mb-3 text-center">VehicleShoppingCarts</h4>
-        <form asp-action="VehicleTypeDelete">
+        <form asp-action="UserDelete" asp-controller="User">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TypeName" class="control-label ml-md-1"></label>
-                <input asp-for="TypeName" class="form-control" readonly/>
+                <label asp-for="Id" class="control-label ml-md-1"></label>
+                <input asp-for="Id" class="form-control" readonly/>
             </div>
             <div class="form-group">
-                <label asp-for="TaxCoefficient" class="control-label ml-md-1"></label>
-                <input asp-for="TaxCoefficient" class="form-control" readonly/>
+                <label asp-for="Email" class="control-label ml-md-1"></label>
+                <input asp-for="Email" class="form-control" readonly/>
             </div>
             <div class="form-group text-center">
                 <input type="submit" value="Delete" class="btn btn-danger"/>

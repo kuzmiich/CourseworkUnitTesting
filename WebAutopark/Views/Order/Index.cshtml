@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th width="5%">
-            @Html.DisplayNameFor(model => model.Products)
+            @Html.DisplayNameFor(model => model.CartItems)
         </th>
     </tr>
     </thead>
@@ -26,6 +26,24 @@
             <td width="5%">
                 @Html.DisplayFor(model => item.Id)
             </td>
+            <td width="5%">
+                @Html.DisplayFor(model => item.UserId)
+            </td>
+            <td width="10%">
+                @Html.DisplayFor(model => item.Price)
+            </td>
+            <td width="15%">
+                @Html.DisplayFor(model => item.Description)
+            </td>
+            @foreach (var cartItem in item.CartItems)
+            {
+                <td>
+                    @Html.DisplayFor(model => cartItem.Product.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => cartItem.Amount)
+                </td>
+            }
         </tr>
     }
     </tbody>

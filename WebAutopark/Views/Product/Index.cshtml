@@ -1,0 +1,87 @@
+@model IEnumerable<ProductViewModel>
+
+@{
+    ViewData["Title"] = "ProductList";
+}
+
+<h1 class="text-center">Product page</h1>
+
+@*
+<form method="get">
+    <div class="form-inline form-group">
+        <label class="control-label mr-3">Sort criteria: </label>
+        <select name="criteria" class="form-control mr-2" id="criteria">
+            <option selected value="1">Id</option>
+            <option value="2">Name</option>
+            <option value="3">ShoppingCarts</option>
+            <option value="4">Mileage</option>
+        </select>
+        <label class="control-label mr-1">Is ascending:</label>
+        <input type="checkbox" name="isAscending" value="true" id="isAscending"/>
+
+        <input type="submit" value="filter" class="btn btn-primary ml-2" id="filter"/>
+    </div>
+</form>
+*@
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImgUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var vehicle in Model)
+    {
+        <tr height="20">
+            <td>
+                @Html.DisplayFor(modelItem => vehicle.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => vehicle.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => vehicle.Price)
+            </td>
+            <td>
+                @if (vehicle.ImgUrl.Length < 40)
+                {
+                    @Html.DisplayFor(modelItem => vehicle.ImgUrl)
+                }
+                else
+                {
+                    var imgUrl = $"{vehicle.ImgUrl[..40]}...";
+                    @Html.DisplayFor(modelItem => imgUrl)
+                }
+            </td>
+            <td width="300">
+                @Html.DisplayFor(modelItem => vehicle.Description)
+            </td>
+            <td class="text-center" style="min-width: 160px">
+                @Html.ActionLink("View", "ProductInfo", new {id = vehicle.Id}) |
+                @Html.ActionLink("Edit", "ProductUpdate", new {id = vehicle.Id}) |
+                @Html.ActionLink("Delete", "ProductDelete", new {id = vehicle.Id})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" asp-action="ProductCreate">Create new</a>
+</div>

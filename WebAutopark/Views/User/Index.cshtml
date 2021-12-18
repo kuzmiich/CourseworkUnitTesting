@@ -1,7 +1,7 @@
 @model IEnumerable<WebAutopark.Core.Entities.Identity.User>
 
 @{
-    Layout = null;
+    ViewData["Title"] = "UserList";
 }
 
 <h1 class="text-center">Users:</h1>
@@ -18,18 +18,18 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach (var user in Model)
     {
         <tr>
-            <td width="5%">
-                @Html.DisplayFor(model => item.Id)
+            <td width="25%">
+                @Html.DisplayFor(model => user.Id)
             </td>
-            <td width="5%">
-                @Html.DisplayFor(model => item.Email)
+            <td width="25%">
+                @Html.DisplayFor(model => user.Email)
             </td>
             
             <td class="text-center">
-                @Html.ActionLink("Delete", "DeleteUser", "User", new {id = item.Id})
+                @Html.ActionLink("Delete", "UserDelete", "User", new {id = user.Id})
             </td>
         </tr>
     }

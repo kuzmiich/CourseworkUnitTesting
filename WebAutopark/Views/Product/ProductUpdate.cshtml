@@ -1,0 +1,50 @@
+﻿@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Update Vehicle";
+}
+
+<div class="card col-md-7 m-auto">
+    <div class="card-header">
+        <h2 class="text-center">Update Product</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="ProductUpdate" asp-controller="Product">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden="hidden"/>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label ml-md-1"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label ml-md-1"></label>
+                <input asp-for="Price" class="form-control"/>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgUrl" class="control-label ml-md-1"></label>
+                <input asp-for="ImgUrl" class="form-control"/>
+                <span asp-validation-for="ImgUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label ml-md-1"></label>
+                <input asp-for="Description" class="form-control"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Save" class="btn btn-outline-success"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,53 @@
+@model ShoppingCartViewModel
+
+@{
+    ViewData["Title"] = "CartList";
+}
+
+<div class="card col-md-7 m-auto">
+    <div class="card-header d-flex justify-content-between">
+        <h2 class="">Cart</h2>
+        <button class="btn btn-outline-dark">&times;</button>
+    </div>
+    <form class="card-body" method="post" asp-controller="Order" asp-action="OrderCreate">
+        @if (Model!.ShoppingCarts.Count != 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead class="thead-light">
+                <tr>
+                    <th class="" width="20%">Name</th>
+                    <th class="" width="20%">Price</th>
+                    <th class="" width="20%">Amount</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var cart in Model.ShoppingCarts)
+                {
+                    <tr>
+                        <td>@cart.Product.Name</td>
+                        <td>@cart.Product.Price $</td>
+                        <td>@cart.Amount</td>
+                        <td class="text-center" style="width: 0%">
+                            <a class="delete_product_button" asp-controller="ShoppingCart" asp-action="RemoveProduct" asp-route-id="@cart.Product.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>Total price:</td>
+                    <td colspan="3" class="text-center">@Model.TotalPrice $</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="col-md-4 m-auto">
+                <a type="submit" class="btn btn-primary" asp-controller="Order" asp-action="OrderCreate">Create Order</a>
+            </div>
+        }
+        else
+        {
+            <p>Your cart is empty. You have not added any products.</p>
+        }
+    </form>
+</div>
