@@ -22,12 +22,13 @@ namespace WebAutopark.BusinessLayer.Services.Base
             Repository = repository;
             Mapper = mapper;
         }
-        
+
         public virtual async Task<List<TModel>> GetAll()
         {
-            var entities = await Repository.GetAll().ToListAsync();
+            var entities = Repository.GetAll();
 
-            return Mapper.Map<List<TModel>>(entities);
+            return await entities.ProjectTo<TModel>(Mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
         public async Task<TModel> GetById(int id)
@@ -36,6 +37,7 @@ namespace WebAutopark.BusinessLayer.Services.Base
 
             return Mapper.Map<TModel>(entity);
         }
+
         public virtual async Task<TModel> Create(TModel model)
         {
             var entity = Mapper.Map<TEntity>(model);
@@ -55,11 +57,13 @@ namespace WebAutopark.BusinessLayer.Services.Base
 
             return Mapper.Map<TModel>(updatedEntity);
         }
+
         public async Task Delete(int id)
         {
             await Repository.Delete(id);
             await Repository.Save();
         }
+
         public void Dispose() => Repository?.Dispose();
 
         public ValueTask DisposeAsync() => Repository.DisposeAsync();

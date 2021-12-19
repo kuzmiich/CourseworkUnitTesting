@@ -103,6 +103,11 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<OrderViewModel>(updateModel));
         }
+        
+        /*var cartItemViewModels =
+            _mapper.Map<List<ShoppingCartItemViewModel>>(await _cartService.GetAll(orderViewModel.Id));
+        orderViewModel.CartItems = cartItemViewModels;
+        await _orderService.Update(_mapper.Map<OrderModel>(orderViewModel));*/
 
         [HttpPost]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
@@ -111,10 +116,6 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*var cartItemViewModels =
-                    _mapper.Map<List<ShoppingCartItemViewModel>>(await _cartService.GetAll(orderViewModel.Id));
-                orderViewModel.CartItems = cartItemViewModels;
-                await _orderService.Update(_mapper.Map<OrderModel>(orderViewModel));*/
                 
                 var order = _orderRepository.GetAll().Single(o => o.Id == orderViewModel.Id);
                 order.Address = orderViewModel.Address;

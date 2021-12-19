@@ -42,7 +42,7 @@ namespace WebAutopark.DataAccess
                     },
                     new Product
                     {
-                        Name = "Mazerati", 
+                        Name = "Maserati", 
                         Price = 30000m,
                         ImgUrl = "https://i.pinimg.com/originals/a4/8b/b8/a48bb8dc1128710ec5b711ed1bfc038e.jpg",
                         Description = "Some text 3"
