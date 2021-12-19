@@ -13,7 +13,11 @@ namespace WebAutopark.Core.Entities
         
         public IEnumerable<ShoppingCartItem> CartItems { get; set; }
         
-        public decimal Price => CartItems.Sum(item => item.Product.Price * item.Amount);
+        public decimal TotalPrice { get; set; }
+
+        public string FirstName { get; set; }
+        
+        public string LastName { get; set; }
 
         public string Address { get; set; }
 

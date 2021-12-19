@@ -13,16 +13,16 @@ namespace WebAutopark.DataAccess.Repositories.Base
         where TEntity : class
     {
         private static bool _disposed = false;
-        private readonly WebAutoparkContext _context;
+        protected readonly WebAutoparkContext Сontext;
         protected readonly DbSet<TEntity> Set;
 
-        protected BaseRepository(WebAutoparkContext context)
+        protected BaseRepository(WebAutoparkContext сontext)
         {
-            _context = context;
-            Set = context.Set<TEntity>();
+            Сontext = сontext;
+            Set = сontext.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
             return Set.AsNoTracking();
         }
@@ -41,7 +41,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
         public virtual async Task<TEntity> Create(TEntity entity)
         {
             var addedEntity = (await Set.AddAsync(entity)).Entity;
-
+            
             return addedEntity;
         }
 
@@ -49,7 +49,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
         {
             RepositoryException.IsEntityExists(entity, typeof(TEntity).FullName);
 
-            _context.Entry(entity).State = EntityState.Detached;
+            Сontext.Entry(entity).State = EntityState.Detached;
 
             return entity;
         }
@@ -63,30 +63,29 @@ namespace WebAutopark.DataAccess.Repositories.Base
             Set.Remove(deletedEntity);
         }
 
-        public Task Save() => _context.SaveChangesAsync();
+        public Task Save() => Сontext.SaveChangesAsync();
 
         #region Dispose Repository
 
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if (!_disposed)
             {
                 if (disposing)
-                    _context.Dispose();
+                    Сontext.Dispose();
             }
 
             _disposed = true;
         }
-
-
+        
         public void Dispose()
         {
-            _context.Dispose();
+            Сontext.Dispose();
         }
 
         public ValueTask DisposeAsync()
         {
-            return _context.DisposeAsync();
+            return Сontext.DisposeAsync();
         }
 
         #endregion

@@ -2,13 +2,13 @@
 
 <div class="card col-md-4 col-sm-4">
     <div class="card-header">
-        <img class="card-img" src="@Model.ImgUrl" alt="img/product-2.jpg" width="300" height="300">
+        <img src="@Model.ImgUrl" alt="img/product-2.jpg" class="card-img" style="object-fit: contain" height="300">
     </div>
     
     <div class="card-body">
         @if (Model.Name.Length > 35)
         {
-            <h2 class="">@Model.Name.Substring(0, 32)...</h2>
+            <h2 class="">@(Model.Name[..32])...</h2>
         }
         else
         {

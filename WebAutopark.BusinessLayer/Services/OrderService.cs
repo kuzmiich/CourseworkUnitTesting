@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace WebAutopark.BusinessLayer.Services
             : base(repository, mapper)
         {
         }
-
+        
         public override async Task<List<OrderModel>> GetAll()
         {
             var entities = await Repository.GetAll()

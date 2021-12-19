@@ -17,7 +17,6 @@ namespace WebAutopark.Tests.IntegrationTests.Get
         [InlineData("/Product/ProductUpdate")]
         [InlineData("/Product/ProductInfo/")]
         [InlineData("/Order")]
-        [InlineData("/Order/OrderInfo/")]
         [InlineData("/Order/OrderDelete")]
         [InlineData("/Order/OrderUpdate")]
         [InlineData("/Order/OrderCreate")]
@@ -26,6 +25,7 @@ namespace WebAutopark.Tests.IntegrationTests.Get
         [InlineData("/User/UserDelete/")]
         [InlineData("/Account/Login")]
         [InlineData("/Account/Register")]
+        [InlineData("/Account/Logout")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange

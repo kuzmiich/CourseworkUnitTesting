@@ -5,7 +5,7 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class ProductRepository : BaseRepository<Product>
     {
-        public ProductRepository(WebAutoparkContext context) : base(context)
+        public ProductRepository(WebAutoparkContext сontext) : base(сontext)
         {
         }
     }

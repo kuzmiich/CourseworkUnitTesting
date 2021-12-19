@@ -50,9 +50,9 @@ namespace WebAutopark.DataAccess.Repositories
             var shoppingCartItem = await _context.ShoppingCartItems.SingleOrDefaultAsync(
                 item => item.Product.Id == product.Id && item.ShoppingCartId == ShoppingCartId);
 
-            if (shoppingCartItem is null) 
+            if (shoppingCartItem is null)
                 return null;
-            
+
             if (shoppingCartItem.Amount > 1)
             {
                 shoppingCartItem.Amount--;
@@ -73,11 +73,12 @@ namespace WebAutopark.DataAccess.Repositories
 
             _context.ShoppingCartItems.RemoveRange(cartItems);
         }
-
+        
         public async Task SaveChanges() => await _context.SaveChangesAsync();
 
         public void Dispose() => _context.Dispose();
 
         public ValueTask DisposeAsync() => _context.DisposeAsync();
+
     }
 }

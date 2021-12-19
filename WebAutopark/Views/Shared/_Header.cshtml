@@ -1,4 +1,9 @@
-﻿<header>
+﻿@using Microsoft.AspNetCore.Identity
+@using WebAutopark.Core.Entities.Identity
+
+@inject UserManager<User> _userManager
+
+<header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebAutopark</a>
@@ -14,7 +19,7 @@
                     @if (User.Identity!.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+                            <a class="nav-link text-dark" asp-area="" asp-route-userId="@_userManager.GetUserId(User)" asp-controller="Order" asp-action="Index">Order</a>
                         </li>
                         @if(User.IsInRole("admin") )
                         {

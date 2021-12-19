@@ -39,13 +39,14 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<ProductViewModel>(model));
         }
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
         public IActionResult ProductCreate()
         {
             return View();
         }
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = IdentityRoleConstant.Admin)]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProductCreate(ProductViewModel model)
         {
             if (ModelState.IsValid)

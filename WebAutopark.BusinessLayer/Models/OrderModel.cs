@@ -12,11 +12,15 @@ namespace WebAutopark.BusinessLayer.Models
         
         public int Id { get; set; }
 
-        public decimal Price { get; }
+        public decimal TotalPrice { get; set; }
+
+        public List<ShoppingCartItemModel> CartItems { get; set; }
+        
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
         
         public string Address { get; set; }
-        
-        public List<ShoppingCartItemModel> CartItems { get; set; }
 
         public string Description { get; set; }
     }

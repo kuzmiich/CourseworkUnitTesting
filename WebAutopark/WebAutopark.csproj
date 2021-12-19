@@ -56,6 +56,7 @@
       <Content Update="appsettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Remove="WebAutopark\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -64,6 +65,18 @@
       <UpToDateCheckInput Remove="Views\Detail\DetailInfo.cshtml" />
       <UpToDateCheckInput Remove="Views\Detail\DetailUpdate.cshtml" />
       <UpToDateCheckInput Remove="Views\Detail\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="WebAutopark\**" />
     </ItemGroup>
 
 </Project>

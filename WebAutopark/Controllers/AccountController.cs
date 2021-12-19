@@ -78,8 +78,6 @@ namespace WebAutopark.Controllers
             return View(model);
         }
         
-        
-        [Route("/logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync(); // delete authentication cookies

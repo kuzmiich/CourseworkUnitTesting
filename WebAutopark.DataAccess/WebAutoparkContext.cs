@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebAutopark.Core.Entities;
 using WebAutopark.Core.Entities.Base;
 using WebAutopark.Core.Entities.Identity;
@@ -21,5 +22,10 @@ namespace WebAutopark.DataAccess
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         
         public override DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

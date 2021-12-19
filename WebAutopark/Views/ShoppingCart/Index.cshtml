@@ -1,4 +1,7 @@
+@using WebAutopark.Core.Entities.Identity
+@using Microsoft.AspNetCore.Identity
 @model ShoppingCartViewModel
+@inject UserManager<User> _userManager
 
 @{
     ViewData["Title"] = "CartList";
@@ -7,7 +10,7 @@
 <div class="card col-md-7 m-auto">
     <div class="card-header d-flex justify-content-between">
         <h2 class="">Cart</h2>
-        <button class="btn btn-outline-dark">&times;</button>
+        <a class="btn btn-outline-dark" style="padding: 1.5% 2.5%;" asp-controller="Home" asp-action="Index">&times;</a>
     </div>
     <form class="card-body" method="post" asp-controller="Order" asp-action="OrderCreate">
         @if (Model!.ShoppingCarts.Count != 0)
@@ -16,7 +19,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th class="" width="20%">Name</th>
-                    <th class="" width="20%">Price</th>
+                    <th class="" width="20%">TotalPrice</th>
                     <th class="" width="20%">Amount</th>
                     <th></th>
                 </tr>
@@ -41,13 +44,16 @@
                 </tr>
                 </tfoot>
             </table>
-            <div class="col-md-4 m-auto">
-                <a type="submit" class="btn btn-primary" asp-controller="Order" asp-action="OrderCreate">Create Order</a>
+            <div class="d-flex justify-content-between">                
+                <a type="submit" class="btn btn-danger" asp-controller="ShoppingCart" asp-action="ClearCart">Discard</a>
+                <a type="submit" class="btn btn-primary" asp-controller="Order" asp-action="OrderCreate" asp-route-userId="@_userManager.GetUserId(User)">Create Order</a>
             </div>
         }
         else
         {
-            <p>Your cart is empty. You have not added any products.</p>
+            <div>
+                <p>Your cart is empty. You have not added any products.</p>
+            </div>
         }
     </form>
 </div>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAutopark.DataAccess;
 
@@ -11,9 +12,10 @@ using WebAutopark.DataAccess;
 namespace WebAutopark.DataAccess.Migrations
 {
     [DbContext(typeof(WebAutoparkContext))]
-    partial class WebAutoparkContextModelSnapshot : ModelSnapshot
+    [Migration("20211218173824_AddPriceColumnToOrder")]
+    partial class AddPriceColumnToOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,7 +245,7 @@ namespace WebAutopark.DataAccess.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
@@ -395,9 +397,7 @@ namespace WebAutopark.DataAccess.Migrations
                 {
                     b.HasOne("WebAutopark.Core.Entities.Order", null)
                         .WithMany("CartItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("WebAutopark.Core.Entities.Product", "Product")
                         .WithMany()
