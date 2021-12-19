@@ -1,4 +1,4 @@
-﻿@model WebAutopark.Models.VehicleTypeViewModel
+﻿@model VehicleTypeViewModel
 
 @{
     ViewData["Title"] = "Create VehicleType";
@@ -10,7 +10,7 @@
         <h2 class="mb-2 text-center">Create Detail</h2>
     </div>
     <div class="card-body">
-        <form asp-action="VehicleTypeCreate">
+        <form asp-action="VehicleTypeCreate" asp-controller="VehicleType">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">

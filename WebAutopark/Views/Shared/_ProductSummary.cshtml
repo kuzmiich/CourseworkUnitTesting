@@ -1,0 +1,36 @@
+@model WebAutopark.Models.ProductViewModel
+
+<div class="card col-md-4 col-sm-4">
+    <div class="card-header">
+        <img src="@Model.ImgUrl" alt="img/product-2.jpg" class="card-img" style="object-fit: contain" height="300">
+    </div>
+    
+    <div class="card-body">
+        @if (Model.Name.Length > 35)
+        {
+            <h2 class="">@(Model.Name[..32])...</h2>
+        }
+        else
+        {
+            <h2 class="">@Model.Name</h2>
+        }
+        <p class="">@Model.Description</p>
+        
+        <div class="d-flex justify-content-between">
+            <ins class="">@Model.Price $</ins>
+            
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddProduct" asp-route-id="@Model.Id">Add</a>
+            }
+        </div>
+        <hr>
+        @if (User.IsInRole("admin"))
+        {
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-secondary" asp-controller="Product" asp-action="ProductUpdate" asp-route-id="@Model.Id">Update</a>
+                <a class="btn btn-danger" asp-controller="Product" asp-action="ProductDelete" asp-route-id="@Model.Id">Delete</a>
+            </div>
+        }
+    </div>
+</div>

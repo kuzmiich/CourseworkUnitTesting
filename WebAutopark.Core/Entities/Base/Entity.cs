@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WebAutopark.Core.Entities.Base
+﻿namespace WebAutopark.Core.Entities.Base
 {
     public abstract class Entity
     {

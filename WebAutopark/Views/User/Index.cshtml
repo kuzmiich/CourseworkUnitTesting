@@ -1,0 +1,38 @@
+@model IEnumerable<WebAutopark.Core.Entities.Identity.User>
+
+@{
+    ViewData["Title"] = "UserList";
+}
+
+<h1 class="text-center">Users:</h1>
+
+<table class="table text-center">
+    <thead class="thead-light">
+    <tr>
+        <th width="5%">
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td width="25%">
+                @Html.DisplayFor(model => user.Id)
+            </td>
+            <td width="25%">
+                @Html.DisplayFor(model => user.Email)
+            </td>
+            
+            <td class="text-center">
+                @Html.ActionLink("Delete", "UserDelete", "User", new {id = user.Id})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -8,11 +8,14 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="10.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+      <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -53,6 +56,27 @@
       <Content Update="appsettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Detail\DetailCreate.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\DetailDelete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\DetailInfo.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\DetailUpdate.cshtml" />
+      <UpToDateCheckInput Remove="Views\Detail\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="WebAutopark\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="WebAutopark\**" />
     </ItemGroup>
 
 </Project>

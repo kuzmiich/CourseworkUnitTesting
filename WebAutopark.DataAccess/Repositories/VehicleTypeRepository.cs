@@ -5,7 +5,7 @@ namespace WebAutopark.DataAccess.Repositories
 {
     public class VehicleTypeRepository : BaseRepository<VehicleType>
     {
-        public VehicleTypeRepository(WebAutoparkContext context) : base(context)
+        public VehicleTypeRepository(WebAutoparkContext сontext) : base(сontext)
         {
         }
     }

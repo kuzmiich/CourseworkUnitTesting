@@ -25,10 +25,9 @@ namespace WebAutopark.BusinessLayer.Services.Base
         
         public virtual async Task<List<TModel>> GetAll()
         {
-            var entities = Repository.GetAll();
+            var entities = await Repository.GetAll().ToListAsync();
 
-            return await entities.ProjectTo<TModel>(Mapper.ConfigurationProvider)
-                                 .ToListAsync();
+            return Mapper.Map<List<TModel>>(entities);
         }
 
         public async Task<TModel> GetById(int id)

@@ -8,11 +8,11 @@ namespace WebAutopark.BusinessLayer.MappingProfiles
     {
         public ConfigureBusinessLayerProfile()
         {
-            CreateMap<Detail, DetailModel>()
+            CreateMap<Product, ProductModel>()
+                .ReverseMap();
+            CreateMap<ShoppingCartItem, ShoppingCartItemModel>()
                 .ReverseMap();
             CreateMap<Order, OrderModel>()
-                .ReverseMap();
-            CreateMap<Vehicle, VehicleModel>()
                 .ReverseMap();
             CreateMap<VehicleType, VehicleTypeModel>()
                 .ReverseMap();

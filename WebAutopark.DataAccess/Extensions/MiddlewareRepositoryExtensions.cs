@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,9 +14,9 @@ namespace WebAutopark.DataAccess.Extensions
     {
         public static IServiceCollection AddDatabaseDependencies(this IServiceCollection services)
         {
-            services.AddScoped<IRepository<Detail>, DetailRepository>();
-
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+            services.AddScoped<ICartRepository<ShoppingCartItem>, ShoppingCartRepository>();
+            
+            services.AddScoped<IRepository<Product>, ProductRepository>();
 
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
 
@@ -24,22 +25,28 @@ namespace WebAutopark.DataAccess.Extensions
             return services;
         }
         
-        public static IServiceCollection AddIdentityContext(this IServiceCollection services)
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services)
         {
             services.AddIdentity<User, IdentityRole<int>>(options =>
                 {
-                    options.Password = new PasswordOptions
-                    {
-                        RequiredLength = 6,
-                        RequireNonAlphanumeric = false,
-                        RequireLowercase = false,
-                        RequireUppercase = false,
-                        RequireDigit = false,
-                    };
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireDigit = false;
                     options.User.RequireUniqueEmail = true;
+                    options.Lockout.MaxFailedAccessAttempts = 5;
                 }).AddEntityFrameworkStores<WebAutoparkContext>()
                 .AddDefaultTokenProviders();
+            
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            });
 
+            
             return services;
         }
         

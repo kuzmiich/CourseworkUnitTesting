@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using WebAutopark.BusinessLayer.Models;
+using WebAutopark.Core.Entities.Identity;
 using WebAutopark.Models;
 
 namespace WebAutopark.MappingProfiles
@@ -8,9 +10,11 @@ namespace WebAutopark.MappingProfiles
     {
         public ConfigureViewModelProfile()
         {
-            CreateMap<DetailModel, DetailViewModel>()
+            CreateMap<User, ClaimsPrincipal>()
                 .ReverseMap();
-            CreateMap<VehicleModel, VehicleViewModel>()
+            CreateMap<ProductModel, ProductViewModel>()
+                .ReverseMap();
+            CreateMap<ShoppingCartItemModel, ShoppingCartItemViewModel>()
                 .ReverseMap();
             CreateMap<VehicleTypeModel, VehicleTypeViewModel>()
                 .ReverseMap();

@@ -1,9 +1,9 @@
-﻿@model IEnumerable<WebAutopark.Models.VehicleTypeViewModel>
+﻿@model IEnumerable<VehicleTypeViewModel>
 
 @{
     ViewData["Title"] = "VehicleTypeList";
 }
-<h1 class="text-center">VehicleType page</h1>
+<h1 class="text-center">VehicleTypes page</h1>
 
 <table class="table">
     <thead class="thead-light">
@@ -24,13 +24,13 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td width="20%">
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
-            <td>
+            <td width="20%">
                 @Html.DisplayFor(modelItem => item.TypeName)
             </td>
-            <td>
+            <td width="20%">
                 @Html.DisplayFor(modelItem => item.TaxCoefficient)
             </td>
             <td class="text-center">

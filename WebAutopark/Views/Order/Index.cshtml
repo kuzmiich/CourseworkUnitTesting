@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebAutopark.Models.OrderViewModel>
+﻿@model IEnumerable<OrderViewModel>
 
 @{
     ViewData["Title"] = "OrderList";
@@ -8,17 +8,81 @@
 <table class="table text-center">
     <thead class="thead-light">
     <tr>
-        <th width="5%">
-            @Html.DisplayNameFor(model => model.Id)
+        @if (User.IsInRole("admin"))
+        {
+            <th width="5%">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th width="5%">
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+        }
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th width="15%">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th width="20%">
+            Model | Price | Amount
+        </th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach (var order in Model)
     {
         <tr>
-            <td width="5%">
-                @Html.DisplayFor(model => item.Id)
+            @if (User.IsInRole("admin"))
+            {
+                <td width="5%">
+                 @Html.DisplayFor(model => order.Id)
+                </td>
+                <td width="5%">
+                    @Html.DisplayFor(model => order.UserId)
+                </td>
+            }
+            <td width="10%">
+                @Html.DisplayFor(model => order.FirstName)
+            </td>
+            <td width="10%">
+                @Html.DisplayFor(model => order.LastName)
+            </td>
+            <td width="10%">
+                @Html.DisplayFor(model => order.Address)
+            </td>
+            <td width="10%">
+                @Html.DisplayFor(model => order.TotalPrice)
+            </td>
+            <td width="15%">
+                @Html.DisplayFor(model => order.Description)
+            </td>
+            <td>
+                @foreach (var cartItem in order.CartItems)
+                {
+                    <table>
+                        <tr><tb>@Html.DisplayFor(model => cartItem.Product.Name)</tb> |
+                            <tb>@Html.DisplayFor(model => cartItem.Product.Price)</tb> |
+                            <tb>@Html.DisplayFor(model => cartItem.Amount)</tb></tr>
+                    </table>
+                }
+            </td>
+            <td class="text-center" style="min-width: 160px">
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Edit", "OrderUpdate", new { id = order.Id }) 
+                <span> | </span> 
+            }
+                @Html.ActionLink("Delete", "OrderDelete", new { id = order.Id })
             </td>
         </tr>
     }
