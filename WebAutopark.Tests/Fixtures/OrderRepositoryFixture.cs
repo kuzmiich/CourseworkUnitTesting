@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataAccess.Repositories;
 using WebAutopark.Tests.Fixtures.Base;
@@ -15,16 +16,13 @@ namespace WebAutopark.Tests.Fixtures
 
         protected override async Task InitDatabase()
         {
-            var orders = new List<Order>
-            {
-                new () { Description = "Name" },
-                new () { Description = "Name2" } 
-            };
+            var entityEntry = await Connection.Orders.AddAsync(new Order { Description = "Name" });
             
-            await Connection.Orders.AddRangeAsync(orders);
+            Id = entityEntry.Entity.Id;
+            
+            await Connection.Orders.AddRangeAsync(entityEntry.Entity);
             await Connection.SaveChangesAsync();
-            
-            Id = Connection.Orders.First().Id;
+            entityEntry.State = EntityState.Detached;
         }
     }
 }

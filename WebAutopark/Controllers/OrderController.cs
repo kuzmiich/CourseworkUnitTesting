@@ -17,20 +17,18 @@ namespace WebAutopark.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IRepository<Order> _orderRepository;
         private readonly UserManager<User> _userManager;
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
         public OrderController(IOrderService orderService, IMapper mapper, ICartService cartService,
-            UserManager<User> userManager, IRepository<Order> orderRepository)
+            UserManager<User> userManager)
         {
             _orderService = orderService;
             _mapper = mapper;
             _cartService = cartService;
             _userManager = userManager;
-            _orderRepository = orderRepository;
         }
 
         [HttpGet]
@@ -103,12 +101,16 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<OrderViewModel>(updateModel));
         }
-        
-        /*var cartItemViewModels =
-            _mapper.Map<List<ShoppingCartItemViewModel>>(await _cartService.GetAll(orderViewModel.Id));
-        orderViewModel.CartItems = cartItemViewModels;
-        await _orderService.Update(_mapper.Map<OrderModel>(orderViewModel));*/
 
+        
+        /*var cartItems = await _cartService.GetAll();
+        var updatedCartItems = cartItems;
+        
+        var cartItemViewModels =
+            _mapper.Map<List<ShoppingCartItemViewModel>>(updatedCartItems);
+        orderViewModel.CartItems = cartItemViewModels;
+        */
+        
         [HttpPost]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
@@ -116,15 +118,8 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                var order = _orderRepository.GetAll().Single(o => o.Id == orderViewModel.Id);
-                order.Address = orderViewModel.Address;
-                order.FirstName = orderViewModel.FirstName;
-                order.LastName = orderViewModel.LastName;
-                order.Description = orderViewModel.Description;
-                
-                await _orderRepository.Save();
-                
+                await _orderService.Update(_mapper.Map<OrderModel>(orderViewModel));
+
                 return RedirectToAction("Index");
             }
 

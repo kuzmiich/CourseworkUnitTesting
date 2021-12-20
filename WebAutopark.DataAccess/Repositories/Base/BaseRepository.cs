@@ -49,7 +49,7 @@ namespace WebAutopark.DataAccess.Repositories.Base
         {
             RepositoryException.IsEntityExists(entity, typeof(TEntity).FullName);
 
-            Сontext.Entry(entity).State = EntityState.Detached;
+            Сontext.Entry(entity).State = EntityState.Modified;
 
             return entity;
         }

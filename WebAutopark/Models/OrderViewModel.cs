@@ -22,9 +22,9 @@ namespace WebAutopark.Models
         public string LastName { get; set; }
         
         public string Description { get; set; }
+
+        public decimal TotalPrice { get; set; }
         
         public List<ShoppingCartItemViewModel> CartItems { get; set; }
-        
-        public decimal TotalPrice { get; set; }
     }
 }
