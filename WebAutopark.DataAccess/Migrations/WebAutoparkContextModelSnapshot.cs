@@ -253,7 +253,7 @@ namespace WebAutopark.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("WebAutopark.Core.Entities.Product", b =>
@@ -278,7 +278,7 @@ namespace WebAutopark.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("WebAutopark.Core.Entities.ShoppingCartItem", b =>
@@ -307,7 +307,7 @@ namespace WebAutopark.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ShoppingCartItems");
+                    b.ToTable("ShoppingCartItems", (string)null);
                 });
 
             modelBuilder.Entity("WebAutopark.Core.Entities.VehicleType", b =>
@@ -326,7 +326,7 @@ namespace WebAutopark.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleTypes");
+                    b.ToTable("VehicleTypes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -396,8 +396,7 @@ namespace WebAutopark.DataAccess.Migrations
                     b.HasOne("WebAutopark.Core.Entities.Order", null)
                         .WithMany("CartItems")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebAutopark.Core.Entities.Product", "Product")
                         .WithMany()

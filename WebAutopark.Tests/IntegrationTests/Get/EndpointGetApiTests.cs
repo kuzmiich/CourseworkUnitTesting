@@ -41,7 +41,6 @@ namespace WebAutopark.Tests.IntegrationTests.Get
         
         [Theory]
         [InlineData("/Query")]
-        [InlineData("/Account/Regidas")]
         public async Task Get_EndpointsReturnErrorAndNotFoundContentType(string url)
         {
             // Arrange

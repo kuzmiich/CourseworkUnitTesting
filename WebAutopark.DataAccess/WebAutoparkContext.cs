@@ -25,6 +25,14 @@ namespace WebAutopark.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ShoppingCartItem>(b =>
+            {
+                b.HasOne("WebAutopark.Core.Entities.Order", null)
+                    .WithMany("CartItems")
+                    .HasForeignKey("OrderId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+            
             base.OnModelCreating(builder);
         }
     }
