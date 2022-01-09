@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Entities;
+using WebAutopark.Core.Exceptions;
 using WebAutopark.DataAccess.Repositories.Base;
 
 namespace WebAutopark.DataAccess.Repositories
@@ -47,6 +48,8 @@ namespace WebAutopark.DataAccess.Repositories
 
         public async Task<ShoppingCartItem> RemoveProduct(Product product)
         {
+            RepositoryException.IsEntityExists(product, typeof(Product).FullName);
+            
             var shoppingCartItem = await _context.ShoppingCartItems.SingleOrDefaultAsync(
                 item => item.Product.Id == product.Id && item.ShoppingCartId == ShoppingCartId);
 

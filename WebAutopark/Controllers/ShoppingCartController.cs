@@ -9,6 +9,7 @@ using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
+    [Route("carts")]
     public class ShoppingCartController : Controller
     {
         private readonly ICartService _shoppingCartService;
@@ -22,7 +23,7 @@ namespace WebAutopark.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("index/")]
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -37,6 +38,7 @@ namespace WebAutopark.Controllers
             return View(shoppingCartViewModel);
         }
 
+        [Route("add/")]
         [Authorize]
         public async Task<IActionResult> AddProduct(int id)
         {
@@ -50,7 +52,8 @@ namespace WebAutopark.Controllers
             
             return RedirectToAction("Index");
         }
-
+        
+        [Route("remove/")]
         [Authorize]
         public async Task<IActionResult> RemoveProduct(int id)
         {
@@ -64,7 +67,8 @@ namespace WebAutopark.Controllers
             
             return RedirectToAction("Index");
         }
-
+        
+        [Route("clear/")]
         [Authorize]
         public async Task<IActionResult> ClearCart()
         {

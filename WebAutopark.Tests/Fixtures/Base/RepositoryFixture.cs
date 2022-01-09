@@ -13,11 +13,11 @@ namespace WebAutopark.Tests.Fixtures.Base
         {
             Connection = ContextCreator.CreateContext();
             Repository = CreateRepository();
-            InitDatabase();
+            InitDatabase().GetAwaiter();
         }
 
+        public int Id { get; set; }
         public WebAutoparkContext Connection { get; }
-
         public TRepository Repository { get; }
         
         protected abstract TRepository CreateRepository();

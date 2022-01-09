@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using WebAutopark.BusinessLayer.Interfaces;
 using WebAutopark.BusinessLayer.Models;
 using WebAutopark.Core.Constants;
-using WebAutopark.Core.Entities;
 using WebAutopark.Core.Entities.Identity;
-using WebAutopark.DataAccess.Repositories.Base;
 using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
+    [Route("/orders/")]
     public class OrderController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -31,7 +30,7 @@ namespace WebAutopark.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
+        [HttpGet("index/")]
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -52,7 +51,7 @@ namespace WebAutopark.Controllers
             return View(userOrders);
         }
 
-        [HttpGet]
+        [HttpGet("create/")]
         [Authorize]
         public async Task<IActionResult> OrderCreate(int userId)
         {
@@ -69,15 +68,17 @@ namespace WebAutopark.Controllers
             return View(orderViewModel);
         }
 
-        [HttpPost]
+        [HttpPost("create/")]
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OrderCreate(OrderViewModel orderViewModel)
         {
             if (ModelState.IsValid)
             {
-                await SetOrderCartItemsAndTotalPrice(orderViewModel);
-                await _orderService.Create(_mapper.Map<OrderModel>(orderViewModel));
+                var orderModel = _mapper.Map<OrderModel>(orderViewModel);
+                await _cartService.SetCartItemsAndTotalPrice(orderModel);
+                
+                await _orderService.Create(orderModel);
 
                 return RedirectToAction("Index");
             }
@@ -90,7 +91,7 @@ namespace WebAutopark.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("update/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> OrderUpdate(int id)
         {
@@ -101,17 +102,8 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<OrderViewModel>(updateModel));
         }
-
         
-        /*var cartItems = await _cartService.GetAll();
-        var updatedCartItems = cartItems;
-        
-        var cartItemViewModels =
-            _mapper.Map<List<ShoppingCartItemViewModel>>(updatedCartItems);
-        orderViewModel.CartItems = cartItemViewModels;
-        */
-        
-        [HttpPost]
+        [HttpPost("update/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OrderUpdate(OrderViewModel orderViewModel)
@@ -126,7 +118,7 @@ namespace WebAutopark.Controllers
             return View(orderViewModel);
         }
 
-        [HttpGet]
+        [HttpGet("delete/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("OrderDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
@@ -139,23 +131,13 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<OrderViewModel>(deleteModel));
         }
 
-        [HttpPost]
+        [HttpPost("delete/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> OrderDelete(int id)
         {
             await _orderService.Delete(id);
 
             return RedirectToAction("Index");
-        }
-
-        [NonAction]
-        private async Task SetOrderCartItemsAndTotalPrice(OrderViewModel order)
-        {
-            var cartItemModels = await _cartService.GetAll();
-            var cartItemViewModels = _mapper.Map<List<ShoppingCartItemViewModel>>(cartItemModels);
-
-            order.CartItems = cartItemViewModels;
-            order.TotalPrice = _cartService.GetTotalPrice(cartItemModels);
         }
     }
 }

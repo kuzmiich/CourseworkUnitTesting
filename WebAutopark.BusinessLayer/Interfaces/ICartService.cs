@@ -8,5 +8,6 @@ namespace WebAutopark.BusinessLayer.Interfaces
     public interface ICartService : IShoppingCartService<ShoppingCartItemModel>
     {
         decimal GetTotalPrice(IEnumerable<ShoppingCartItemModel> cartItems);
+        Task SetCartItemsAndTotalPrice(OrderModel order);
     }
 }

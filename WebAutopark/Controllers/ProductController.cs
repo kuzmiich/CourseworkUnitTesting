@@ -10,6 +10,7 @@ using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
+    [Route("products")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -21,7 +22,7 @@ namespace WebAutopark.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("index/")]
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -30,7 +31,7 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<List<ProductViewModel>>(models));
         }
 
-        [HttpGet]
+        [HttpGet("info/")]
         [Authorize]
         public async Task<IActionResult> ProductInfo(int id)
         {
@@ -38,26 +39,29 @@ namespace WebAutopark.Controllers
 
             return View(_mapper.Map<ProductViewModel>(model));
         }
-        [HttpGet]
+        
+        [HttpGet("create/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public IActionResult ProductCreate()
         {
             return View();
         }
-        [HttpPost]
+        
+        [HttpPost("create/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProductCreate(ProductViewModel model)
+        public async Task<IActionResult> ProductCreate(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _productService.Create(_mapper.Map<ProductModel>(model));
+                await _productService.Create(_mapper.Map<ProductModel>(productViewModel));
                 return RedirectToAction("Index");
             }
 
             return View();
         }
-        [HttpGet]
+        
+        [HttpGet("update/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> ProductUpdate(int id)
         {
@@ -69,21 +73,21 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<ProductViewModel>(updatedModel));
         }
 
-        [HttpPost]
+        [HttpPost("update/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProductUpdate(ProductViewModel product)
+        public async Task<IActionResult> ProductUpdate(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _productService.Update(_mapper.Map<ProductModel>(product));
+                await _productService.Update(_mapper.Map<ProductModel>(productViewModel));
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            return View(productViewModel);
         }
 
-        [HttpGet]
+        [HttpGet("delete/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("ProductDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
@@ -96,7 +100,7 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<ProductViewModel>(deleteModel));
         }
 
-        [HttpPost]
+        [HttpPost("delete/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> ProductDelete(int id)
         {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using WebAutopark.BusinessLayer.Extensions;
 using WebAutopark.BusinessLayer.MappingProfiles;
 using WebAutopark.MappingProfiles;

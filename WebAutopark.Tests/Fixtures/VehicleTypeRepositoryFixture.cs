@@ -11,7 +11,6 @@ namespace WebAutopark.Tests.Fixtures
 {
     internal class VehicleTypeRepositoryFixture : RepositoryFixture<VehicleTypeRepository>
     {
-        public int Id { get; set; }
         protected override VehicleTypeRepository CreateRepository() => new (Connection);
 
         protected override async Task InitDatabase()

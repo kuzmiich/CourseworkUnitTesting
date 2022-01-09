@@ -1,17 +1,14 @@
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using WebAutopark.Core.Constants;
 using WebAutopark.Core.Entities.Identity;
-using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
+    [Route("users")]
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -21,7 +18,7 @@ namespace WebAutopark.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
+        [HttpGet("index/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> Index()
         {
@@ -30,8 +27,7 @@ namespace WebAutopark.Controllers
             return View(users);
         }
         
-
-        [HttpGet]
+        [HttpGet("delete/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("UserDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
@@ -44,7 +40,7 @@ namespace WebAutopark.Controllers
             return View(deletedModel);
         }
         
-        [HttpPost]
+        [HttpPost("delete/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> UserDelete(int id)
         {

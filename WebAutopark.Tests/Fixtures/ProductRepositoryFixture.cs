@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebAutopark.Core.Entities;
@@ -10,7 +8,6 @@ namespace WebAutopark.Tests.Fixtures
 {
     public class ProductRepositoryFixture : RepositoryFixture<ProductRepository>
     {
-        public int Id { get; set; }
         protected override ProductRepository CreateRepository() => new (Connection);
 
         protected override async Task InitDatabase()

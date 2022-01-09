@@ -11,6 +11,7 @@ using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
+    [Route("vehicleTypes/")]
     public class VehicleTypeController : Controller
     {
         private readonly IVehicleTypeService _vehicleTypeService;
@@ -22,7 +23,7 @@ namespace WebAutopark.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("index/")]
         public async Task<IActionResult> Index()
         {
             var models = await _vehicleTypeService.GetAll();
@@ -30,7 +31,7 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<IEnumerable<VehicleTypeViewModel>>(models));
         }
 
-        [HttpGet]
+        [HttpGet("info/")]
         public async Task<IActionResult> VehicleTypeInfo(int id)
         {
             var model = await _vehicleTypeService.GetById(id);
@@ -41,21 +42,21 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<VehicleTypeViewModel>(model));
         }
 
-        [HttpGet]
+        [HttpGet("create/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public IActionResult VehicleTypeCreate()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("create/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VehicleTypeCreate(VehicleTypeViewModel vehicleTypeViewModel)
+        public async Task<IActionResult> VehicleTypeCreate(VehicleTypeViewModel vehicleType)
         {
             if (ModelState.IsValid)
             {
-                await _vehicleTypeService.Create(_mapper.Map<VehicleTypeModel>(vehicleTypeViewModel));
+                await _vehicleTypeService.Create(_mapper.Map<VehicleTypeModel>(vehicleType));
                 return RedirectToAction("Index");
             }
 
@@ -63,7 +64,7 @@ namespace WebAutopark.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("update/")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> VehicleTypeUpdate(int id)
         {
@@ -75,7 +76,7 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<VehicleTypeViewModel>(updatedModel));
         }
 
-        [HttpPost]
+        [HttpPost("/update")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VehicleTypeUpdate(VehicleTypeViewModel vehicleType)
@@ -89,7 +90,7 @@ namespace WebAutopark.Controllers
             return View(vehicleType);
         }
 
-        [HttpGet]
+        [HttpGet("/delete")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         [ActionName("VehicleTypeDelete")]
         public async Task<IActionResult> ConfirmDelete(int id)
@@ -102,7 +103,7 @@ namespace WebAutopark.Controllers
             return View(_mapper.Map<VehicleTypeViewModel>(deletedModel));
         }
 
-        [HttpPost]
+        [HttpPost("/delete")]
         [Authorize(Roles = IdentityRoleConstant.Admin)]
         public async Task<IActionResult> VehicleTypeDelete(int id)
         {

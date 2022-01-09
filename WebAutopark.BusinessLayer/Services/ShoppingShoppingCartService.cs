@@ -24,7 +24,16 @@ namespace WebAutopark.BusinessLayer.Services
         
         public decimal GetTotalPrice(IEnumerable<ShoppingCartItemModel> cartItems) =>
             cartItems.Sum(item => item.Product.Price * item.Amount);
-        
+
+        public async Task SetCartItemsAndTotalPrice(OrderModel order)
+        {
+            var cartItems = await _repository.GetAll().ToListAsync();
+            var cartItemModels = _mapper.Map<List<ShoppingCartItemModel>>(cartItems);
+
+            order.CartItems = cartItemModels;
+            order.TotalPrice = GetTotalPrice(cartItemModels);
+        }
+
         public virtual async Task<List<ShoppingCartItemModel>> GetAll()
         {
             var entities = await _repository.GetAll()

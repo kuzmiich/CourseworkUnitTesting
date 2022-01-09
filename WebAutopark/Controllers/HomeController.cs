@@ -22,7 +22,7 @@ namespace WebAutopark.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("/")]
         public async Task<IActionResult> Index()
         {
             var products = _mapper.Map<List<ProductViewModel>>(await _productService.GetAll());
@@ -34,6 +34,7 @@ namespace WebAutopark.Controllers
         ///     You can look examples of logger events if you will run the action.
         /// </summary>
         /// <returns></returns>
+        [HttpGet("/CheckLogger")]
         public IActionResult CheckLogger()
         {
             _logger.LogTrace("Trace log message");
