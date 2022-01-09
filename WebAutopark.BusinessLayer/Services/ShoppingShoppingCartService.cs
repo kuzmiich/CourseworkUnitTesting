@@ -27,7 +27,7 @@ namespace WebAutopark.BusinessLayer.Services
 
         public async Task SetCartItemsAndTotalPrice(OrderModel order)
         {
-            var cartItems = await _repository.GetAll().ToListAsync();
+            var cartItems = await GetAll();
             var cartItemModels = _mapper.Map<List<ShoppingCartItemModel>>(cartItems);
 
             order.CartItems = cartItemModels;

@@ -13,7 +13,7 @@ using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
-    [Route("/orders/")]
+    [Route("orders")]
     public class OrderController : Controller
     {
         private readonly UserManager<User> _userManager;

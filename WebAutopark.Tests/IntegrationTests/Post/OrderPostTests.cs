@@ -1,18 +1,8 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Moq;
 using Newtonsoft.Json;
-using WebAutopark.BusinessLayer.Interfaces;
-using WebAutopark.BusinessLayer.Services;
-using WebAutopark.Controllers;
-using WebAutopark.Core.Entities;
-using WebAutopark.Core.Entities.Identity;
-using WebAutopark.DataAccess.Repositories.Base;
 using WebAutopark.Models;
 using WebAutopark.Tests.Fixtures.Base;
 using Xunit;
@@ -35,15 +25,6 @@ namespace WebAutopark.Tests.IntegrationTests.Post
             // Arrange
             const string url = "/orders/delete";
 
-            /*var mockOrderService = new Mock<IOrderService>();
-            var mockShoppingCartService = new Mock<ICartService>();
-            var userManager = new Mock<UserManager<User>>();
-            var mapper = new Mock<IMapper>();
-            var controller = new OrderController(mockOrderService.Object, 
-                mapper.Object, 
-                mockShoppingCartService.Object,
-                userManager.Object);*/
-            
             var model = new OrderViewModel()
             {
             };
